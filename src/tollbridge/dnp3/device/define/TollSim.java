@@ -12,10 +12,12 @@ import com.automatak.dnp3.Counter;
 import com.automatak.dnp3.CounterInputQuality;
 import com.automatak.dnp3.DatabaseConfig;
 import com.automatak.dnp3.EventAnalogResponse;
+import com.automatak.dnp3.LogLevel;
 import com.automatak.dnp3.OutstationStackConfig;
 import com.automatak.dnp3.StaticAnalogResponse;
 import com.automatak.dnp3.StaticBinaryResponse;
 import com.automatak.dnp3.StaticCounterResponse;
+import com.automatak.dnp3.mock.SuccessCommandHandler;
 
 /**
  * Toll management
@@ -60,12 +62,11 @@ public class TollSim extends Device {
         
         dnp3Config.outstationConfig.disableUnsol = false;
         
+        // Create an Outstation instance, pass in a simple a command handler that responds successfully to everything
+//        dnp3Outstation = dnp3Channel.addOutstation("outstation", LogLevel.INTERPRET, SuccessCommandHandler.getInstance(), dnp3Config);
+        TollCommandHandler cmdHandler = new TollCommandHandler(this);
+        dnp3Outstation = dnp3Channel.addOutstation("outstation", LogLevel.INTERPRET, cmdHandler, dnp3Config);
 
-	}
-
-
-	@Override
-	public void initDnp3ProcImg() {
         procimg = new ProcessImage(dnp3Outstation);
         
         procimg.addBinaryInput(false); //STATUS_BARRIER

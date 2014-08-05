@@ -57,8 +57,10 @@ public class MasterDemo {
         config.masterConfig.integrityRateMs = 10000; //Update refresh
         config.masterConfig.enableUnsol = true;
         
+        TollDataObserver myDO = new TollDataObserver();
+        
         // Create a master instance, pass in a simple singleton to print received values to the console
-        master = channel.addMaster("master", LogLevel.INTERPRET, PrintingDataObserver.getInstance(), config);
+        master = channel.addMaster("master", LogLevel.INTERPRET, myDO, config);
 
         // You can optionally add a listener to receive state changes on the stack
         master.addStateListener(new StackStateListener() {

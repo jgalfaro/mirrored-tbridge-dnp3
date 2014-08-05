@@ -68,11 +68,6 @@ abstract class Device {
         });
 
         initDnp3Config();
-
-        // Create an Outstation instance, pass in a simple a command handler that responds successfully to everything
-        dnp3Outstation = dnp3Channel.addOutstation("outstation", LogLevel.INTERPRET, SuccessCommandHandler.getInstance(), dnp3Config);
-
-        initDnp3ProcImg();
         
         // You can optionally add a listener to receive state changes on the stack
         /*
@@ -97,9 +92,7 @@ abstract class Device {
 
 	
 	abstract public void initDnp3Config();
-	
-	abstract public void initDnp3ProcImg();
-	
+		
 	/*
 	 * EV3 Initialisation
 	 */
