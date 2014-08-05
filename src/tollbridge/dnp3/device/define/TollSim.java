@@ -1,19 +1,21 @@
-package device.define;
+package tollbridge.dnp3.device.define;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
+import Ressources.ProcessImage;
+
+import com.automatak.dnp3.Counter;
+import com.automatak.dnp3.CounterInputQuality;
 import com.automatak.dnp3.DatabaseConfig;
+import com.automatak.dnp3.EventAnalogResponse;
 import com.automatak.dnp3.OutstationStackConfig;
 import com.automatak.dnp3.StaticAnalogResponse;
-
-//Modbus imports
-import net.wimpi.modbus.ModbusDeviceIdentification;
-import net.wimpi.modbus.procimg.SimpleDigitalIn;
-import net.wimpi.modbus.procimg.SimpleDigitalOut;
-import net.wimpi.modbus.procimg.SimpleInputRegister;
-import net.wimpi.modbus.procimg.SimpleProcessImage;
-import net.wimpi.modbus.procimg.SimpleRegister;
+import com.automatak.dnp3.StaticBinaryResponse;
+import com.automatak.dnp3.StaticCounterResponse;
 
 /**
  * Toll management
@@ -21,108 +23,64 @@ import net.wimpi.modbus.procimg.SimpleRegister;
  * @version 1.0
  */
 public class TollSim extends Device {
-	public TollSim(String deviceAddr, Boolean modbusActive, int modbusPort, int modbusUnitId, Boolean dnp3Active, int dnp3Port, int dnp3UnitId) {
-		super(deviceAddr, modbusActive, modbusPort, modbusUnitId, dnp3Active, dnp3Port, dnp3UnitId);
+	public TollSim(String deviceAddr, int dnp3Port, int dnp3UnitId) {
+		super(deviceAddr, dnp3Port, dnp3UnitId);
 	}
 	public static TollSimFrame window;
 
-	//Discrete Input
-	private static final int STATUS_BARRIER = 0; 
-	
-	//Discrete Output
-	private static final int STATUS_ACTIVE = 0;	
-	private static final int STATUS_FREE = 1;
-	
-	//Holding Register	
-	private static final int STATUS_NB_CARS = 0;
-	private static final int STATUS_NB_COINS = 1;
-
-	//Input Register
+	//Input Analog
 	private static final int STATUS_UNIT_ID = 0;
 	private static final int STATUS_COIN_COLOR = 1;
 	private static final int STATUS_CAR_PASSAGE = 2;
 	private static final int STATUS_KEY_PRESS = 3;
 	private static final int STATUS_CAR_PRESENTING = 4;
 
+	//Input Binary
+	private static final int STATUS_BARRIER = 0; 
 	
+	//Output Binary
+	private static final int STATUS_ACTIVE = 0;	
+	private static final int STATUS_FREE = 1;
 	
-	
-	/*
-	 * Modbus initialisation
-	 */
-	public void initModbusSpi() {		
-		this.spi = new SimpleProcessImage();
+	//Counter Inputs
+	private static final int STATUS_NB_CARS = 0;
+	private static final int STATUS_NB_COINS = 1;
 
-		//Discrete output
-		this.spi.addDigitalOut(new SimpleDigitalOut(false)); //0 STATUS_ACTIVE
-		this.spi.addDigitalOut(new SimpleDigitalOut(false)); //1 STATUS_FREE
-
-		//Discrete input
-		this.spi.addDigitalIn(new SimpleDigitalIn(false)); //0 STATUS_BARRIER
-		
-		//Holding register
-		this.spi.addRegister(new SimpleRegister(0)); //1 Nb coins
-		this.spi.addRegister(new SimpleRegister(0)); //2 NB cars
-	
-		//Input register
-		this.spi.addInputRegister(new SimpleInputRegister(this.modbusUnitId)); //0 STATUS_UNIT_ID
-		this.spi.addInputRegister(new SimpleInputRegister(0)); //1 STATUS_COIN_COLOR
-		this.spi.addInputRegister(new SimpleInputRegister(0)); //2 STATUS_CAR_PASSAGE
-		this.spi.addInputRegister(new SimpleInputRegister(0)); //3 STATUS_KEY_PRESS
-		this.spi.addInputRegister(new SimpleInputRegister(0)); //4 STATUS_CAR_PRESENTING
-		
-	}
-	
-	public void initModbusIdentification() {
-		this.mbIdent = new ModbusDeviceIdentification();
-		
-		this.mbIdent.setIdentification(0, "TELECOM SUD PARIS");
-		this.mbIdent.setIdentification(1, "LEGO TOLL SIM");
-		this.mbIdent.setIdentification(2, "0.1");
-		this.mbIdent.setIdentification(3, "http://www.telecom-sudparis.eu");
-		this.mbIdent.setIdentification(4, "LEGO TOLL SIM");
-		this.mbIdent.setIdentification(5, "LEGO TOLL SIM SMALL EDITION");
-		this.mbIdent.setIdentification(6, "LEGO TOLL SIM LEJOS");
-		this.mbIdent.setIdentification(130, "NICE Comment for a simulated toll");
-		this.mbIdent.setIdentification(131, "NICE Comment for a simulgfdated toll");
-		this.mbIdent.setIdentification(132, "NICE Comment for a simulagsdsfgfted toll");
-		this.mbIdent.setIdentification(133, "NdfsgICE Comment for a simulated toll");
-		this.mbIdent.setIdentification(134, "NICE fgffdsgddComment for a simulated toll");
-		this.mbIdent.setIdentification(135, "NICE Commegnt for a simulated toll");
-		this.mbIdent.setIdentification(136, "NICE Commefdnt fofdgr a simulated toll");
-		this.mbIdent.setIdentification(137, "NICE Commenggdsfsdgfdft for a simulated toll");
-		this.mbIdent.setIdentification(138, "NICEg Comment for a simulated toll");
-		this.mbIdent.setIdentification(139, "NICEfd Comment for a simulated toll");
-		this.mbIdent.setIdentification(140, "NICE gfComment for a simulated toll");
-		this.mbIdent.setIdentification(141, "NICE Cdsgomment for a simulated toll");
-		this.mbIdent.setIdentification(142, "NICE Comfdsment for a simulated toll");
-		this.mbIdent.setIdentification(143, "NICE Commegnt for a simulated toll");
-		this.mbIdent.setIdentification(144, "NICE Commefdsnt for a simulated toll");
-		this.mbIdent.setIdentification(145, "NICE Commentg for a simulated toll");
-		this.mbIdent.setIdentification(146, "NICE Commentfds for a simulated toll");
-		this.mbIdent.setIdentification(147, "NICE Comment fgor a simulated toll");
-		this.mbIdent.setIdentification(148, "NICE Comment ffdsor a simulated toll");
-		this.mbIdent.setIdentification(149, "NICE Comment forgf a simulated toll");
-		this.mbIdent.setIdentification(150, "NICE Comment for sda simulated toll");
-		this.mbIdent.setIdentification(151, "NICE Comment for agsd simulated toll");
-		this.mbIdent.setIdentification(152, "NICE Comment for a ssffsdgdgfimulated toll");
-		this.mbIdent.setIdentification(153, "NICE Comment for a simulfsfsgdgdgated toll");
-		this.mbIdent.setIdentification(154, "NICE Comment for a simulatedfgffdsgdd toll");
-		this.mbIdent.setIdentification(155, "NICE Comment for a simulated tolgsfdgsl");
-	}
-	
 
 	@Override
 	public void initDnp3Config() {
-        // Outstation will have 5 of every measurement type
-		DatabaseConfig dnp3Db = new DatabaseConfig(1,5,2,2,0);
+
         // Create the default outstation configuration
-        dnp3Config = new OutstationStackConfig(dnp3Db);
-        dnp3Config.outstationConfig.staticAnalogInput = StaticAnalogResponse.GROUP30_VAR1;
+        dnp3Config = new OutstationStackConfig(new DatabaseConfig(1,5,2,0,0));
+
+        dnp3Config.outstationConfig.staticAnalogInput = StaticAnalogResponse.GROUP30_VAR3; //Int 32 bits
+        dnp3Config.outstationConfig.staticBinaryInput = StaticBinaryResponse.GROUP1_VAR2;
+        dnp3Config.outstationConfig.staticCounter = StaticCounterResponse.GROUP20_VAR1;
+        dnp3Config.outstationConfig.eventAnalogInput = EventAnalogResponse.GROUP32_VAR1;
+        
+        dnp3Config.outstationConfig.disableUnsol = false;
+        
 
 	}
 
+
+	@Override
+	public void initDnp3ProcImg() {
+        procimg = new ProcessImage(dnp3Outstation);
+        
+        procimg.addBinaryInput(false); //STATUS_BARRIER
+        
+        procimg.addAnalogInput(this.dnp3UnitId); //STATUS_UNIT_ID
+        procimg.addAnalogInput(0); //STATUS_COIN_COLOR
+        procimg.addAnalogInput(0); //STATUS_CAR_PASSAGE
+        procimg.addAnalogInput(0); //STATUS_KEY_PRESS
+        procimg.addAnalogInput(0); //STATUS_CAR_PRESENTING 
+        
+        procimg.addCounter(0); //STATUS_NB_CARS
+        procimg.addCounter(0); //STATUS_NB_COINS
+	}
 	
+
 	
 	@Override
 	public void initEV3() {
@@ -150,7 +108,32 @@ public class TollSim extends Device {
 		int refColorId = 0;
 		int coinColorId = 0;
 		
-        setDisplayColor(0); //None
+        setDisplayColor(0);
+
+        
+        // all this stuff just to read a line of text in Java. Oh the humanity.
+        String line = "";
+        InputStreamReader converter = new InputStreamReader(System.in);
+        BufferedReader in = new BufferedReader(converter);
+
+        
+        int i = 0;
+        while (true) {
+            System.out.println("Enter something to update a counter or type <quit> to exit");
+            try {
+				line = in.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            if(line.equals("quit")) break;
+            else {
+            	procimg.setBinaryInput(0, true);
+            	procimg.incCounter(STATUS_NB_CARS);
+            }
+        }
+  
+        //None
+        /*
         while (this.spi.getInputRegister(STATUS_KEY_PRESS).getValue() != 1) {
 			
 			drawScreen();
@@ -205,6 +188,7 @@ public class TollSim extends Device {
 				barrierDown();
 			}
 		}
+		*/
         setDisplayColor(0); //None
 		barrierDown();
 	}
@@ -214,9 +198,12 @@ public class TollSim extends Device {
 	 */
 	public void drawScreen() {
 
+		String status = "";
+		
+		status = "To fill";
+		/*
 		window.setBarrierStatus(this.spi.getDigitalIn(STATUS_BARRIER).isSet());
 
-		String status = "";
 		status += "Coins inside : " + this.spi.getRegister(STATUS_NB_COINS).getValue() + "\n";
 		status += "Cars viewed : " + this.spi.getRegister(STATUS_NB_CARS).getValue() + "\n";
 		status += "-------------\n";
@@ -229,7 +216,7 @@ public class TollSim extends Device {
 		status += "Free : " + this.spi.getDigitalOut(STATUS_FREE).isSet() + "\n";
 		status += "-------------\n";
 		status += "Barrier up : " + this.spi.getDigitalIn(STATUS_BARRIER).isSet() + "\n";
-		
+		*/
 		window.getStatus().setText(status);
 		
 		
@@ -238,21 +225,23 @@ public class TollSim extends Device {
 	/*
 	 * Raise the barrier
 	 */
+	
 	public void barrierUp() {
-		if (this.spi.getDigitalIn(STATUS_BARRIER).isSet() == false) {
+/*		if (this.spi.getDigitalIn(STATUS_BARRIER).isSet() == false) {
 //			barrierMotor.rotate(+ BARRIER_ANGLE);
 			this.spi.setDigitalIn(STATUS_BARRIER, new SimpleDigitalIn(true));
-		}
+		}*/
 	}
 
 	/*
 	 * Low the barrier
 	 */
 	public void barrierDown() {
+	/*
 		if (this.spi.getDigitalIn(STATUS_BARRIER).isSet() == true) {
 //			barrierMotor.rotate(- BARRIER_ANGLE);		
 			this.spi.setDigitalIn(STATUS_BARRIER, new SimpleDigitalIn(false));
-		}
+		}*/
 	}
 
 	/*
@@ -270,12 +259,13 @@ public class TollSim extends Device {
 /*
  * Activate motors to eat inserted coin (and increase counter associated)
  */
+	/*
 	public void eatCoin() {
 		int nbCoins = this.spi.getRegister(STATUS_NB_COINS).getValue();
 		this.spi.setRegister(STATUS_NB_COINS, new SimpleRegister(nbCoins + 1));
 
 		setCoin(0);
-	}
+	}*/
 	
 	/*
 	 * Activate motors to reject inserted coin
@@ -288,14 +278,13 @@ public class TollSim extends Device {
 	 * Increase counter if a car has gone 
 	 */
 	public void addCar() {
-		int nbCars = this.spi.getRegister(STATUS_NB_CARS).getValue();
-		this.spi.setRegister(STATUS_NB_CARS, new SimpleRegister(nbCars + 1));
+		this.procimg.incCounter(STATUS_NB_CARS);
+				
 		// car_passage == 0 : wait for car to free the sensor
 //		while (this.spi.getInputRegister(STATUS_CAR_PASSAGE).getValue() == 1);
-		this.spi.setInputRegister(STATUS_CAR_PASSAGE, new SimpleInputRegister(0));
+		this.procimg.setAnalogInput(STATUS_CAR_PASSAGE, 0);
+
 	}
-
-
 
 	@Override
 	public void beep() {
@@ -322,17 +311,20 @@ public class TollSim extends Device {
 	
 	public void setNewCar() {
 		System.out.println("Car is on");
-		this.spi.setInputRegister(STATUS_CAR_PASSAGE, new SimpleInputRegister(1));
+		this.procimg.setAnalogInput(STATUS_CAR_PASSAGE, 1);
 	}
 
 	public void setCoin(int coinValue) {
 		System.out.println("New coin " + coinValue);
-		this.spi.setInputRegister(STATUS_COIN_COLOR, new SimpleInputRegister(coinValue));
+		this.procimg.incCounter(STATUS_NB_COINS);
+		this.procimg.setAnalogInput(STATUS_COIN_COLOR, coinValue);
+
 	}
 
 	public void setExit() {
 		System.out.println("Exit");
-		this.spi.setInputRegister(STATUS_KEY_PRESS, new SimpleInputRegister(1));
-	}
+		this.procimg.setAnalogInput(STATUS_KEY_PRESS, 1);
+		System.exit(0);
+	}	
 	
 }

@@ -1,4 +1,4 @@
-package device.define;
+package tollbridge.dnp3.device.define;
 
 import java.awt.Container;
 import java.awt.Toolkit;
