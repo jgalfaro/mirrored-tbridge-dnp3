@@ -1,4 +1,4 @@
-package tollbridge.dnp3.device.define;
+package tollbridge.dnp3.outstation;
 
 import com.automatak.dnp3.AnalogOutputDouble64;
 import com.automatak.dnp3.AnalogOutputFloat32;

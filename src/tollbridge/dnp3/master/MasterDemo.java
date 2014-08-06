@@ -31,9 +31,6 @@ import java.io.InputStreamReader;
  * Example master than can be run against the example outstation
  */
 public class MasterDemo {
-	//Output Binary
-	private static final long STATUS_ACTIVE = 0;	
-	private static final long STATUS_FREE = 1;
 	
 	public static Master master = null;
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -46,8 +43,8 @@ public class MasterDemo {
         manager.addLogSubscriber(PrintingLogSubscriber.getInstance());
 
         // Create a tcp channel class that will connect to the loopback
-        Channel channel = manager.addTCPClient("client", LogLevel.INFO, 50000, "127.0.0.1", 20000);
-
+        Channel channel = manager.addTCPClient("client", LogLevel.INFO, 5000, "127.0.0.1", 20000);
+       
         // You can optionally add a listener to receive state changes on the channel
         channel.addStateListener(new ChannelStateListener() {
             @Override
@@ -60,11 +57,9 @@ public class MasterDemo {
         MasterStackConfig config = new MasterStackConfig();
         config.masterConfig.integrityRateMs = 10000; //Update refresh
         config.masterConfig.enableUnsol = true;
-        
-        TollDataObserver myDO = new TollDataObserver();
-        
+                
         // Create a master instance, pass in a simple singleton to print received values to the console
-        master = channel.addMaster("master", LogLevel.INTERPRET, myDO, config);
+        master = channel.addMaster("master", LogLevel.INTERPRET, PrintingDataObserver.getInstance(), config);
 
         // You can optionally add a listener to receive state changes on the stack
         master.addStateListener(new StackStateListener() {
@@ -73,9 +68,6 @@ public class MasterDemo {
                 System.out.println("Master state: " + state);
             }
         });
-
-        // This sub-interface can issue command requests
-        CommandProcessor processor = master.getCommandProcessor();
 
         // all this stuff just to read a line of text in Java. Oh the humanity.
         String line = "";
@@ -97,12 +89,6 @@ public class MasterDemo {
             } else if ("pay".equals(line)) {
                 operate(2);
             }
-/*            } else {
-                ControlRelayOutputBlock crob = new ControlRelayOutputBlock(ControlCode.LATCH_ON, (short) 1, 100, 100, CommandStatus.SUCCESS);
-                ListenableFuture<CommandStatus> future = processor.selectAndOperate(crob, 0);
-                System.out.println("Control result: " + future.get().name());
-            }
-*/
         }
 
         manager.shutdown();
