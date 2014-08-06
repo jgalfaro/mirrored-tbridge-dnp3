@@ -39,11 +39,10 @@ public class TollSim extends Device {
 
 	//Input Binary
 	private static final int STATUS_BARRIER = 0; 
-	
-	//Output Binary
-	private static final int STATUS_ACTIVE = 0;	
-	private static final int STATUS_FREE = 1;
-	
+
+	//Output Analog
+	private static final int STATUS_MODE = 0;
+
 	//Counter Inputs
 	private static final int STATUS_NB_CARS = 0;
 	private static final int STATUS_NB_COINS = 1;
@@ -53,7 +52,7 @@ public class TollSim extends Device {
 	public void initDnp3Config() {
 
         // Create the default outstation configuration
-        dnp3Config = new OutstationStackConfig(new DatabaseConfig(1,5,2,0,0));
+        dnp3Config = new OutstationStackConfig(new DatabaseConfig(1,5,2,0,1));
 
         dnp3Config.outstationConfig.staticAnalogInput = StaticAnalogResponse.GROUP30_VAR3; //Int 32 bits
         dnp3Config.outstationConfig.staticBinaryInput = StaticBinaryResponse.GROUP1_VAR2;
@@ -79,9 +78,10 @@ public class TollSim extends Device {
         
         procimg.addCounter(0); //STATUS_NB_CARS
         procimg.addCounter(0); //STATUS_NB_COINS
-	}
-	
 
+        procimg.addAnalogOutput(0); //STATUS_MODE
+
+	}
 	
 	@Override
 	public void initEV3() {
@@ -110,32 +110,8 @@ public class TollSim extends Device {
 		int coinColorId = 0;
 		
         setDisplayColor(0);
-
         
-        // all this stuff just to read a line of text in Java. Oh the humanity.
-        String line = "";
-        InputStreamReader converter = new InputStreamReader(System.in);
-        BufferedReader in = new BufferedReader(converter);
-
-        
-        int i = 0;
-        while (true) {
-            System.out.println("Enter something to update a counter or type <quit> to exit");
-            try {
-				line = in.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            if(line.equals("quit")) break;
-            else {
-            	procimg.setBinaryInput(0, true);
-            	procimg.incCounter(STATUS_NB_CARS);
-            }
-        }
-  
-        //None
-        /*
-        while (this.spi.getInputRegister(STATUS_KEY_PRESS).getValue() != 1) {
+        while (this.procimg.getAnalogInput(STATUS_KEY_PRESS).getValue() != 1) {
 			
 			drawScreen();
 			
@@ -146,20 +122,20 @@ public class TollSim extends Device {
 			}
 			
 			//Is the toll activated ?
-			if (this.spi.getDigitalOut(STATUS_ACTIVE).isSet() == true) {
+			if (this.procimg.getAnalogOutput(STATUS_MODE).getValue() > 0) {
 				
 				//Is the toll opened freely ?
-				if (this.spi.getDigitalOut(STATUS_FREE).isSet() == true) {
+				if (this.procimg.getAnalogOutput(STATUS_MODE).getValue() == 1) {
 					setDisplayColor(1); //Green
 					barrierUp();
 					//Increase the car counter
-					if (this.spi.getInputRegister(STATUS_CAR_PASSAGE).getValue() == 1) {
+					if (this.procimg.getAnalogInput(STATUS_CAR_PASSAGE).getValue() == 1) {
 						addCar();
 					}
 				} else {
 					setDisplayColor(3); //Orange
 					//Is a coin inserted and waiting for action ?
-					coinColorId = this.spi.getInputRegister(STATUS_COIN_COLOR).getValue();
+					coinColorId = (int) this.procimg.getAnalogInput(STATUS_COIN_COLOR).getValue();
 					
 					if (refColorId != coinColorId) {
 						System.out.println("New coin inserted");
@@ -171,7 +147,7 @@ public class TollSim extends Device {
 							drawScreen();
 							
 							//Wait a car to low the barrier
-							while (this.spi.getInputRegister(STATUS_CAR_PASSAGE).getValue() == 0);
+							while (this.procimg.getAnalogInput(STATUS_CAR_PASSAGE).getValue() == 0);
 							addCar();
 													
 							barrierDown();
@@ -189,7 +165,7 @@ public class TollSim extends Device {
 				barrierDown();
 			}
 		}
-		*/
+		
         setDisplayColor(0); //None
 		barrierDown();
 	}
@@ -200,24 +176,21 @@ public class TollSim extends Device {
 	public void drawScreen() {
 
 		String status = "";
-		
-		status = "To fill";
-		/*
-		window.setBarrierStatus(this.spi.getDigitalIn(STATUS_BARRIER).isSet());
 
-		status += "Coins inside : " + this.spi.getRegister(STATUS_NB_COINS).getValue() + "\n";
-		status += "Cars viewed : " + this.spi.getRegister(STATUS_NB_CARS).getValue() + "\n";
+		window.setBarrierStatus(procimg.getBinaryInput(STATUS_BARRIER).getValue());
+
+		status += "Coins inside : " + procimg.getCounter(STATUS_NB_COINS).getValue() + "\n";
+		status += "Cars viewed : " + procimg.getCounter(STATUS_NB_CARS).getValue() + "\n";
 		status += "-------------\n";
-		status += "TOLL : " + this.spi.getInputRegister(STATUS_UNIT_ID).getValue() + "\n";
-		status += "Coin color : " + this.spi.getInputRegister(STATUS_COIN_COLOR).getValue() + "\n";
-		status += "Car passage : " + this.spi.getInputRegister(STATUS_CAR_PASSAGE).getValue() + "\n";
-		status += "Key : " + this.spi.getInputRegister(STATUS_KEY_PRESS).getValue() + "\n";
+		status += "TOLL : " + procimg.getAnalogInput(STATUS_UNIT_ID).getValue() + "\n";
+		status += "Coin color : " + procimg.getAnalogInput(STATUS_COIN_COLOR).getValue() + "\n";
+		status += "Car passage : " + procimg.getAnalogInput(STATUS_CAR_PASSAGE).getValue() + "\n";
+		status += "Key : " + procimg.getAnalogInput(STATUS_KEY_PRESS).getValue() + "\n";
 		status += "-------------\n";
-		status += "Active : " + this.spi.getDigitalOut(STATUS_ACTIVE).isSet() + "\n";
-		status += "Free : " + this.spi.getDigitalOut(STATUS_FREE).isSet() + "\n";
+		status += "Mode : " + procimg.getAnalogOutput(STATUS_MODE).getValue() + "\n";
 		status += "-------------\n";
-		status += "Barrier up : " + this.spi.getDigitalIn(STATUS_BARRIER).isSet() + "\n";
-		*/
+		status += "Barrier up : " + procimg.getBinaryInput(STATUS_BARRIER).getValue() + "\n";
+
 		window.getStatus().setText(status);
 		
 		
@@ -228,21 +201,20 @@ public class TollSim extends Device {
 	 */
 	
 	public void barrierUp() {
-/*		if (this.spi.getDigitalIn(STATUS_BARRIER).isSet() == false) {
+		if (this.procimg.getBinaryInput(STATUS_BARRIER).getValue() == false) {
 //			barrierMotor.rotate(+ BARRIER_ANGLE);
-			this.spi.setDigitalIn(STATUS_BARRIER, new SimpleDigitalIn(true));
-		}*/
+			this.procimg.setBinaryInput(STATUS_BARRIER, true);
+		}
 	}
 
 	/*
 	 * Low the barrier
 	 */
 	public void barrierDown() {
-	/*
-		if (this.spi.getDigitalIn(STATUS_BARRIER).isSet() == true) {
+		if (this.procimg.getBinaryInput(STATUS_BARRIER).getValue() == true) {
 //			barrierMotor.rotate(- BARRIER_ANGLE);		
-			this.spi.setDigitalIn(STATUS_BARRIER, new SimpleDigitalIn(false));
-		}*/
+			this.procimg.setBinaryInput(STATUS_BARRIER, false);
+		}
 	}
 
 	/*
@@ -260,13 +232,12 @@ public class TollSim extends Device {
 /*
  * Activate motors to eat inserted coin (and increase counter associated)
  */
-	/*
+	
 	public void eatCoin() {
-		int nbCoins = this.spi.getRegister(STATUS_NB_COINS).getValue();
-		this.spi.setRegister(STATUS_NB_COINS, new SimpleRegister(nbCoins + 1));
+		this.procimg.incCounter(STATUS_NB_COINS);
 
 		setCoin(0);
-	}*/
+	}
 	
 	/*
 	 * Activate motors to reject inserted coin
@@ -317,7 +288,6 @@ public class TollSim extends Device {
 
 	public void setCoin(int coinValue) {
 		System.out.println("New coin " + coinValue);
-		this.procimg.incCounter(STATUS_NB_COINS);
 		this.procimg.setAnalogInput(STATUS_COIN_COLOR, coinValue);
 
 	}
@@ -325,7 +295,6 @@ public class TollSim extends Device {
 	public void setExit() {
 		System.out.println("Exit");
 		this.procimg.setAnalogInput(STATUS_KEY_PRESS, 1);
-		System.exit(0);
 	}	
 	
 }

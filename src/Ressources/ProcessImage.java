@@ -4,8 +4,12 @@ import java.util.Vector;
 
 import com.automatak.dnp3.AnalogInput;
 import com.automatak.dnp3.AnalogInputQuality;
+import com.automatak.dnp3.AnalogOutputStatus;
+import com.automatak.dnp3.AnalogOutputStatusQuality;
 import com.automatak.dnp3.BinaryInput;
 import com.automatak.dnp3.BinaryInputQuality;
+import com.automatak.dnp3.BinaryOutputStatus;
+import com.automatak.dnp3.BinaryOutputStatusQuality;
 import com.automatak.dnp3.Counter;
 import com.automatak.dnp3.CounterInputQuality;
 import com.automatak.dnp3.DataObserver;
@@ -15,9 +19,9 @@ public class ProcessImage {
 	private Vector<BinaryInput> m_BinaryInput = null;
 	private Vector<AnalogInput> m_AnalogInput = null;
 	private Vector<Counter> m_Counter = null;
-/*	private Vector m_outBinary = null;
-	private Vector m_outAnalog = null;
-*/	
+	private Vector<BinaryOutputStatus> m_BinaryOutput = null;
+	private Vector<AnalogOutputStatus> m_AnalogOutput = null;
+
 	private DataObserver m_DataObserver = null;
 	
 	public ProcessImage(Outstation outstation) {
@@ -25,9 +29,11 @@ public class ProcessImage {
 		m_BinaryInput = new Vector<BinaryInput>();
 		m_AnalogInput = new Vector<AnalogInput>();
 		m_Counter = new Vector<Counter>();
-/*		m_outBinary = new Vector();
-		m_outAnalog = new Vector();*/
+		m_BinaryOutput = new Vector<BinaryOutputStatus>();
+		m_AnalogOutput = new Vector<AnalogOutputStatus>();
 	}
+	
+	//Binary Input
 	
 	public void addBinaryInput(boolean value) {
 		BinaryInput binIn = new BinaryInput(value, BinaryInputQuality.ONLINE.toByte(), now());
@@ -58,6 +64,8 @@ public class ProcessImage {
 	}
 	
 
+	//Analog Input
+	
 	public void addAnalogInput(double value) {
 		AnalogInput anaIn = new AnalogInput(value, AnalogInputQuality.ONLINE.toByte(), now());
 		m_AnalogInput.addElement(anaIn);
@@ -86,6 +94,8 @@ public class ProcessImage {
 		return m_AnalogInput.size();
 	}
 	
+	
+	//Counter
 	public void addCounter(long value) {
 		Counter cpt = new Counter(value, CounterInputQuality.ONLINE.toByte(), now());
 		m_Counter.addElement(cpt);
@@ -124,6 +134,75 @@ public class ProcessImage {
 		return m_Counter.size();
 	}
 	
+	
+	//Output Binary
+	public void addBinaryOutput(boolean value) {
+		BinaryOutputStatus binOut = new BinaryOutputStatus(value, BinaryOutputStatusQuality.ONLINE.toByte(), now());
+		m_BinaryOutput.addElement(binOut);
+		int ref = this.getBinaryOutputCount() - 1;
+		m_DataObserver.start();
+		m_DataObserver.update(binOut, ref);
+		m_DataObserver.end();
+	}
+
+	public void removeBinaryOutput(BinaryOutputStatus BinOut) {
+		m_BinaryOutput.removeElement(BinOut);		
+	}
+
+	public void setBinaryOutput(int ref, boolean value) {
+		BinaryOutputStatus binOut = new BinaryOutputStatus(value, BinaryOutputStatusQuality.ONLINE.toByte(), now());
+		m_BinaryOutput.setElementAt(binOut, ref);			
+		m_DataObserver.start();
+		m_DataObserver.update(binOut, ref);
+		m_DataObserver.end();
+	}
+	public BinaryOutputStatus getBinaryOutput(int ref) {
+		return m_BinaryOutput.elementAt(ref);
+	}
+
+	public Integer getBinaryOutputCount() {
+		return m_BinaryOutput.size();
+	}
+	
+	
+
+	//Analog Input
+	
+	public void addAnalogOutput(double value) {
+		AnalogOutputStatus anaOut = new AnalogOutputStatus(value, AnalogOutputStatusQuality.ONLINE.toByte(), now());
+		m_AnalogOutput.addElement(anaOut);
+		int ref = this.getAnalogOutputCount() - 1;
+		m_DataObserver.start();
+		m_DataObserver.update(anaOut, ref);
+		m_DataObserver.end();
+	}
+
+	public void removeAnalogOutput(AnalogOutputStatus AnaOut) {
+		m_AnalogOutput.removeElement(AnaOut);		
+	}
+
+	public void setAnalogOutput(int ref, double value) {
+		AnalogOutputStatus anaOut = new AnalogOutputStatus(value, AnalogOutputStatusQuality.ONLINE.toByte(), now());
+		m_AnalogOutput.setElementAt(anaOut, ref);			
+		m_DataObserver.start();
+		m_DataObserver.update(anaOut, ref);
+		m_DataObserver.end();
+	}
+	public AnalogOutputStatus getAnalogOutput(int ref) {
+		return m_AnalogOutput.elementAt(ref);
+	}
+
+	public Integer getAnalogOutputCount() {
+		return m_AnalogOutput.size();
+	}
+	
+	
+	//Other functions
+	
+	/**
+	 * Get the current timestamp
+	 * @return
+	 */
 	private long now() {
         return System.currentTimeMillis();
         

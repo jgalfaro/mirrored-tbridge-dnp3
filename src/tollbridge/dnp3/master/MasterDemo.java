@@ -31,6 +31,10 @@ import java.io.InputStreamReader;
  * Example master than can be run against the example outstation
  */
 public class MasterDemo {
+	//Output Binary
+	private static final long STATUS_ACTIVE = 0;	
+	private static final long STATUS_FREE = 1;
+	
 	public static Master master = null;
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -80,34 +84,41 @@ public class MasterDemo {
 
         
         while (true) {
-            System.out.println("Enter something to issue a command (<poll|oper|xxx>) or type <quit> to exit");
+            System.out.println("Enter something to issue a command (<poll|off|free|pay>) or type <quit> to exit");
             line = in.readLine();
             if ("poll".equals(line)) {
                 master.performIntegrityScan();                
             } else if ("quit".equals(line)) {
                 break;
-            } else if ("oper".equals(line)) {
-                operate();
-            } else {
+            } else if ("off".equals(line)) {
+                operate(0);
+            } else if ("free".equals(line)) {
+                operate(1);
+            } else if ("pay".equals(line)) {
+                operate(2);
+            }
+/*            } else {
                 ControlRelayOutputBlock crob = new ControlRelayOutputBlock(ControlCode.LATCH_ON, (short) 1, 100, 100, CommandStatus.SUCCESS);
                 ListenableFuture<CommandStatus> future = processor.selectAndOperate(crob, 0);
                 System.out.println("Control result: " + future.get().name());
             }
+*/
         }
 
         manager.shutdown();
     }
     
 
-    public static void operate() {
-    	int index = 1;
-	    CommandProcessor processor = master.getCommandProcessor();
+    public static void operate(int mode) {
+    	int index = 0;
     	
-    	AnalogOutputInt32 aop = new AnalogOutputInt32(25, CommandStatus.SUCCESS);
+	    CommandProcessor processor = master.getCommandProcessor();
+    	    	
+    	AnalogOutputInt32 aop_mode = new AnalogOutputInt32 (mode, CommandStatus.SUCCESS);
     	
 	    System.out.println("Begin operate");
 	    
-	    processor.directOperate(aop, index).addListener(new ListenableFuture.CompletionListener<CommandStatus>() {
+	    processor.directOperate(aop_mode, index).addListener(new ListenableFuture.CompletionListener<CommandStatus>() {
 	        @Override
 	        public void onComplete(CommandStatus value) {
 	    	    System.out.println("End operate " + value.toString());
@@ -115,5 +126,4 @@ public class MasterDemo {
 	    });
     }
 
-    
 }

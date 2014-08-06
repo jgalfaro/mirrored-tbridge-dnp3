@@ -22,86 +22,86 @@ public class TollCommandHandler implements CommandHandler{
 
 	@Override
 	public CommandStatus directOperate(AnalogOutputInt32 arg0, long arg1) {
-		System.out.println("Yop " + m_toll.procimg.getCounterCount() + "{" + arg0.toString() + "}");
+		System.out.println("Yop " + (int) arg1 + "-"+ arg0.value);
+		m_toll.procimg.setAnalogOutput((int) arg1, arg0.value);
 		return CommandStatus.SUCCESS;
 	}
 
 	@Override
 	public CommandStatus directOperate(AnalogOutputInt16 arg0, long arg1) {
-		// TODO Auto-generated method stub
-		System.out.println("Yop 2");
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus directOperate(AnalogOutputFloat32 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus directOperate(AnalogOutputDouble64 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus operate(ControlRelayOutputBlock arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus operate(AnalogOutputInt32 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus operate(AnalogOutputInt16 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus operate(AnalogOutputFloat32 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus operate(AnalogOutputDouble64 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus select(ControlRelayOutputBlock arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus select(AnalogOutputInt32 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus select(AnalogOutputInt16 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus select(AnalogOutputFloat32 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 
 	@Override
 	public CommandStatus select(AnalogOutputDouble64 arg0, long arg1) {
-		// TODO Auto-generated method stub
+		System.out.println("Undefined command");
 		return CommandStatus.UNDEFINED;
 	}
 

@@ -53,11 +53,11 @@ public class TollSimFrame extends JFrame implements ActionListener {
 		content.setLayout(null);
 
 		//Barrier up/down
-	    picLabelBarrierOpen = new JLabel( new ImageIcon( "/home/user/projects/tollbridge/src/control/open_barrier.png"));
+	    picLabelBarrierOpen = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/open_barrier.png"));
 		picLabelBarrierOpen.setBounds(10, 10, 60, 60);
 		picLabelBarrierOpen.setVisible(false);
 		content.add(picLabelBarrierOpen);
-		picLabelBarrierClose = new JLabel( new ImageIcon( "/home/user/projects/tollbridge/src/control/close_barrier.png"));
+		picLabelBarrierClose = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/close_barrier.png"));
 		picLabelBarrierClose.setBounds(10, 10, 60, 60);
 		picLabelBarrierClose.setVisible(false);
 		content.add(picLabelBarrierClose);		
