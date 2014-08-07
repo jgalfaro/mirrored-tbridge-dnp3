@@ -4,7 +4,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -16,12 +15,14 @@ import com.automatak.dnp3.mock.PrintingLogSubscriber;
 import tollbridge.dnp3.master.device.Bridge;
 import tollbridge.dnp3.master.device.Toll;
 
+/**
+ * Main class to start the Control Center
+ * @author Ken LE PRADO ken@leprado.com
+ */
 public class ControlCenter {
-	public static Bridge bridge1 = null;
-	public static HomeFrame window;
-	public static List<Toll> tolls = new ArrayList<Toll>();
-	public static List<Bridge> bridges = new ArrayList<Bridge>();
-	
+	private static HomeFrame window;
+	private static List<Toll> tolls = new ArrayList<Toll>();
+	private static List<Bridge> bridges = new ArrayList<Bridge>();
 	private static DNP3Manager DNP3_Manager = null;
 	
 	/**
@@ -39,10 +40,11 @@ public class ControlCenter {
 			}
 		});
 
-    	for (;;) {
-    		TimeUnit.SECONDS.sleep(1);
+    	//for (;;) {
+    	//	TimeUnit.SECONDS.sleep(1);
 
     		//Refresh Tolls Status
+/*
     		Iterator<Toll> iter = tolls.iterator();
     	    while (iter.hasNext()) {
     	    	Toll toll = (Toll) iter.next();
@@ -50,13 +52,15 @@ public class ControlCenter {
     	    		delToll(toll);
     	    	}
     	    }
+  */
     		
+    		/*
     		//Refresh Bridge Status
     		Iterator<Bridge> iterB = bridges.iterator();
     	    while (iterB.hasNext()) {
     	    	Bridge bridge = (Bridge) iterB.next();
 	    		if (bridge.isConnected()) {
-	    			/*
+	    			
 	    			statusBarrier = bridge.getStatusBarrier();
 	    			statusBarrierMode = bridge.getStatusBarrierOpen();
 		    		nbCars = bridge.getStatusNbCars();
@@ -77,14 +81,18 @@ public class ControlCenter {
 		    		bridge.getPanel().setNbBoatWaiting(waitingBoatNb);
 		    		bridge.getPanel().showBridgeBarrier(statusBarrier);
 		    		bridge.getPanel().getStatusBridgeCars().setText(Integer.toString(nbCars));
-		    		*/
+		    		
 	    		} else {
 	    			delBridge(bridge);
 	    		}
     	    }
-    	}
+    	    */
+    	//}
 	}	
 	
+	/**
+	 * Exit the program
+	 */
 	public static void exit() {
 		//Closing all tolls connexion
 		Iterator<Toll> iter = tolls.iterator();
@@ -120,6 +128,9 @@ public class ControlCenter {
 		
 	}
 	
+	/**
+	 * Add a new Toll to the list
+	 */
 	public static void addToll() {
 		Toll myToll = null;
 		
@@ -140,6 +151,10 @@ public class ControlCenter {
 		refreshDevices();
 	}
 	
+	/**
+	 * Remove a connected Toll to the list
+	 * @param myToll Toll to remove
+	 */
 	public static void delToll(Toll myToll) {
 
 		//Del graphics
@@ -157,6 +172,9 @@ public class ControlCenter {
 		refreshDevices();
 	}
 
+	/**
+	 * Refresh status of the Devices
+	 */
 	public static void refreshDevices() {
 		int y = 10;
 		Iterator<Toll> iter = tolls.iterator();
@@ -179,6 +197,9 @@ public class ControlCenter {
 		window.repaint();
 	}
 	
+	/**
+	 * Add a Bridge to the list
+	 */
 	public static void addBridge() {
 		Bridge myBridge = null;
 		
@@ -197,9 +218,12 @@ public class ControlCenter {
 		window.addMessage("new bridge added");
 
 		refreshDevices();
-
 	}
 	
+	/**
+	 * Remove a connected bridge 
+	 * @param myBridge Bridge to remove
+	 */
 	public static void delBridge(Bridge myBridge) {
 
 		//Del graphics
@@ -218,8 +242,9 @@ public class ControlCenter {
 
 	}
 	
-	/*
+	/**
 	 * connect to a Toll
+	 * @return Toll connected
 	 */
 	private static Toll actionConnectNewToll() {
 		Toll myToll = null;
@@ -256,7 +281,10 @@ public class ControlCenter {
 		return myToll;
 	}
 	
-	
+	/**
+	 * Connect to a new bridge
+	 * @return Bridge connected
+	 */
 	private static Bridge actionConnectNewBridge() {
 		Bridge myDevice = null;
 		

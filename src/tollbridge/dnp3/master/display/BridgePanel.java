@@ -12,14 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import tollbridge.dnp3.master.device.Device;
-import tollbridge.dnp3.master.device.Bridge;
 
-
+/**
+ * Bridge Panel
+ * @author Ken LE PRADO ken@leprado.com
+ */
 public class BridgePanel extends DevicePanel implements ActionListener {
-	public BridgePanel(Device dev, Container con, int x, int y) {
-		super(dev, con, x, y);
-	}
-
 	private JLabel picWaitingBoat;
 	private JLabel jlbBdgBoatWaiting;
 	private JLabel jlbStatusBridgeCars;
@@ -36,7 +34,20 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 	private JLabel picLabelBarrierBridgeOpen;
 	private JLabel picLabelBarrierBridgeClose;
 
-	
+	/**
+	 * @param dev Device displayed by this panel
+	 * @param con Container of the panel
+	 * @param x X position of the panel
+	 * @param y Y position of the panel
+	 */
+	public BridgePanel(Device dev, Container con, int x, int y) {
+		super(dev, con, x, y);
+	}
+
+	/**
+	 * Initiate the panel
+	 */	
+	@Override
 	public void initPanel() {
 		content = new JPanel();
 		content.setLayout(null);
@@ -45,7 +56,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		
 
 		//Bridge Name
-		jlbBdgName = new JLabel(myDevice.getLabel());
+		jlbBdgName = new JLabel(myDevice.getIp() + "...");
 		jlbBdgName.setBounds(5, 5, 130, 15);
 		content.add(jlbBdgName);
 				
@@ -128,15 +139,24 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 				
 	}
 		
+	
+	/**
+	 * Remove a panel
+	 */
+	@Override
 	public void removePanel() {
 		content.setVisible(false);
 	}
 
-	@Override
+	/**
+	 * Called on click event on the Panel
+	 * @param e Action Performed
+	 */
 	public void actionPerformed(ActionEvent e) {
+		/*
 		Object source = e.getSource();
  		//TODO Activate buttons
-		/*
+		
 		if (source == btnBridgeBarrierOff) {
 			((Bridge) myDevice).setStatusBarrierOpen(false);
 		} else if (source == btnBridgeBarrierOn) {
@@ -162,6 +182,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		*/
 	}
 	
+	
 	public JLabel getStatusBridgeCars(){
 		return jlbStatusBridgeCars;
 	}	
@@ -176,8 +197,12 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		}
 	}
 	
-
-	public void clearBridgeStatus() {
+	
+	/**
+	 * Clears the status of the bridge, waiting the real data to refresh the display
+	 */
+	@Override
+	public void clearStatus() {
 		btnBridgeActivateOff.setBackground(null);
 		btnBridgeActivateOn.setBackground(null);
 		btnBridgeBarrierOff.setBackground(null);
@@ -196,6 +221,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 	
 		bdgCanvas.setStatus(0, 0, 0);
 	}
+	
 	
 	public void showBridgeBarrierMode(boolean statusBarrier) {
 		
@@ -249,7 +275,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 	
 	public void showWaitingBoat(boolean boatWaiting) {
 		picWaitingBoat.setVisible(true);
-/*		
+/*
 		if (boatWaiting == true) {
 			picWaitingBoat.setVisible(true);
 			jlbBdgBoatWaiting.setVisible(true);
@@ -267,5 +293,14 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 			this.jlbBdgBoatWaiting.setText(nbBoat + " is waiting" );
 		}
 	}
-	
+
+
+	/**
+	 * Refresh the display of the Device Label
+	 * @param unitId Unit Identifier
+	 */
+	@Override
+	void setDeviceLabel(int unitId) {
+		jlbBdgName.setText(myDevice.getIp() + " - id : " + unitId);		
+	}
 }

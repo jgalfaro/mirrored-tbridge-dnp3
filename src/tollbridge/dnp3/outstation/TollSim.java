@@ -1,15 +1,10 @@
 package tollbridge.dnp3.outstation;
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 import Ressources.ProcessImage;
 
-import com.automatak.dnp3.Counter;
-import com.automatak.dnp3.CounterInputQuality;
 import com.automatak.dnp3.DatabaseConfig;
 import com.automatak.dnp3.EventAnalogResponse;
 import com.automatak.dnp3.LogLevel;
@@ -17,7 +12,6 @@ import com.automatak.dnp3.OutstationStackConfig;
 import com.automatak.dnp3.StaticAnalogResponse;
 import com.automatak.dnp3.StaticBinaryResponse;
 import com.automatak.dnp3.StaticCounterResponse;
-import com.automatak.dnp3.mock.SuccessCommandHandler;
 
 /**
  * Toll management
@@ -31,21 +25,21 @@ public class TollSim extends Device {
 	public static TollSimFrame window;
 
 	//Input Analog
-	private static final int STATUS_UNIT_ID = 0;
-	private static final int STATUS_COIN_COLOR = 1;
-	private static final int STATUS_CAR_PASSAGE = 2;
-	private static final int STATUS_KEY_PRESS = 3;
-	private static final int STATUS_CAR_PRESENTING = 4;
+	public static final int STATUS_UNIT_ID = 0;
+	public static final int STATUS_COIN_COLOR = 1;
+	public static final int STATUS_CAR_PASSAGE = 2;
+	public static final int STATUS_KEY_PRESS = 3;
+//	public static final int STATUS_CAR_PRESENTING = 4;
 
 	//Input Binary
-	private static final int STATUS_BARRIER = 0; 
+	public static final int STATUS_BARRIER = 0; 
 
 	//Output Analog
-	private static final int STATUS_MODE = 0;
+	public static final int STATUS_MODE = 0;
 
 	//Counter Inputs
-	private static final int STATUS_NB_CARS = 0;
-	private static final int STATUS_NB_COINS = 1;
+	public static final int STATUS_NB_CARS = 0;
+	public static final int STATUS_NB_COINS = 1;
 
 
 	@Override

@@ -12,7 +12,6 @@ import com.automatak.dnp3.Outstation;
 import com.automatak.dnp3.OutstationStackConfig;
 import com.automatak.dnp3.impl.DNP3ManagerFactory;
 import com.automatak.dnp3.mock.PrintingLogSubscriber;
-import com.automatak.dnp3.mock.SuccessCommandHandler;
 
 /**
  * Defines a device

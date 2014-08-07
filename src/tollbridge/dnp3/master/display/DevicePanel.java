@@ -7,10 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.automatak.dnp3.StackState;
-import com.automatak.dnp3.StackStateListener;
 
 import tollbridge.dnp3.master.device.Device;
 
+/**
+ * Device Panel
+ * @author Ken LE PRADO ken@leprado.com
+ */
 public abstract class DevicePanel {
 	protected int X;
 	protected int Y;
@@ -20,6 +23,14 @@ public abstract class DevicePanel {
 	protected JPanel content;
 	protected Container container;
 
+	/**
+	 * Constructor of a device
+	 * 
+	 * @param dev Device displayed
+	 * @param con Container
+	 * @param x X position
+	 * @param y Y position
+	 */
 	public DevicePanel (Device dev, Container con, int x, int y) {
 		super();
 		container = con;
@@ -30,11 +41,27 @@ public abstract class DevicePanel {
 		initPanel();
 	}
 	
+	/**
+	 * Initiate the panel
+	 */
 	abstract void initPanel();
 
+	/**
+	 * Remove a panel
+	 */
 	abstract void removePanel();
 
+	/**
+	 * Set the label of the Device
+	 * @param unitId Unit Identifier
+	 */
+	abstract void setDeviceLabel(int unitId);
 	
+	/**
+	 * Redisplay a panel
+	 * @param x X position
+	 * @param y Y position
+	 */
 	public void updatePanel(int x, int y) {
 		X = x;
 		Y = y;
@@ -42,20 +69,32 @@ public abstract class DevicePanel {
 		initPanel();
 	}
 	
+
+	/**
+	 * Clears the status of the device, waiting the real data to refresh the display
+	 */
+	abstract public void clearStatus();
+
+	
+	/**
+	 * Access to the panel
+	 * @return Content panel
+	 */
 	public JPanel getContent() {
 		return content;
 	}
 	
+	/**
+	 * Displays the status of the device
+	 * @param status Device status
+	 */
 	public void changeStatus(StackState status) {
 		if (status.equals(StackState.COMMS_UP)) {
 			this.getContent().setBackground(Color.white);
-			System.out.println("########## Change bg to UP");			
 		} else if(status.equals(StackState.COMMS_DOWN)) {
 			this.getContent().setBackground(Color.red);
-			System.out.println("########## Change bg to DOWN");			
 		} else if (status.equals(StackState.UNKNOWN)) {
 			this.getContent().setBackground(Color.lightGray);
-			System.out.println("########## Change bg to UNKNOWN");			
 		}
 	}
 }

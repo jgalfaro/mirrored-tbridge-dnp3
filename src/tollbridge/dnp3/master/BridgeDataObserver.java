@@ -9,6 +9,11 @@ import com.automatak.dnp3.BinaryOutputStatus;
 import com.automatak.dnp3.Counter;
 import com.automatak.dnp3.DataObserver;
 
+/**
+ * Data Observer for a bridge
+ * @author Ken LE PRADO ken@leprado.com
+ *
+ */
 public class BridgeDataObserver implements DataObserver {
 	private Device m_Device;
 	

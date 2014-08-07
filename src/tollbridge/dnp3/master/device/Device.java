@@ -12,14 +12,12 @@ import com.automatak.dnp3.ChannelState;
 import com.automatak.dnp3.ChannelStateListener;
 import com.automatak.dnp3.CommandProcessor;
 import com.automatak.dnp3.CommandStatus;
-import com.automatak.dnp3.DNP3Manager;
 import com.automatak.dnp3.DataObserver;
 import com.automatak.dnp3.ListenableFuture;
 import com.automatak.dnp3.LogLevel;
 import com.automatak.dnp3.Master;
 import com.automatak.dnp3.MasterStackConfig;
 import com.automatak.dnp3.StackState;
-import com.automatak.dnp3.StackStateListener;
 
 public abstract class Device {
 
@@ -29,7 +27,6 @@ public abstract class Device {
 	private Master master = null;
 	public DataObserver myDO = null;
 	public StackState status = null;
-	private int unitId = 0;
 
 	public Device (String myAddress, int port) throws UnknownHostException {
     	this.setIp(myAddress);
@@ -89,14 +86,12 @@ public abstract class Device {
 		channel.shutdown();
 	}
 	public boolean isConnected() {
-		//TODO replace by channel state
-		return true;
+		if (this.status == StackState.COMMS_UP) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-
-	public String getLabel() {
-		return getIp() + " - id : " + getUnitId();
-	}
-	
 	
 	abstract int getUnitId();
 	

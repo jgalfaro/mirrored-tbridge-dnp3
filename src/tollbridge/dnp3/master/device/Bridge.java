@@ -14,28 +14,28 @@ public class Bridge extends Device {
 	private static int BRIDGE_ANGLE = 12;
 
 	//Discrete Input
-	private static final int STATUS_BARRIER = 0;
-	private static final int STATUS_WAITING_BOAT = 1;
+	public static final int STATUS_BARRIER = 0;
+	public static final int STATUS_WAITING_BOAT = 1;
 
 	//Discrete Output
-	private static final int STATUS_ACTIVE = 0;	
-	private static final int STATUS_BRIDGE_MOVE = 1;
-	private static final int STATUS_BRIDGE_RAISE = 2;
-	private static final int STATUS_BARRIER_OPENED = 3;
+	public static final int STATUS_ACTIVE = 0;	
+	public static final int STATUS_BRIDGE_MOVE = 1;
+	public static final int STATUS_BRIDGE_RAISE = 2;
+	public static final int STATUS_BARRIER_OPENED = 3;
 	
 	//Holding Register	
-	private static final int STATUS_NB_CARS = 0;		
+	public static final int STATUS_NB_CARS = 0;		
 	
 	//Input registers
-	private static final int STATUS_UNIT_ID = 0;
-	private static final int STATUS_SENSOR_BUTTON = 1;
-	private static final int STATUS_SENSOR_GYRO = 2;
-	private static final int STATUS_SENSOR_PASSAGE = 3;
-	private static final int STATUS_SENSOR_BOAT = 4;
-	private static final int STATUS_SENSOR_MOVE = 5;
-	private static final int STATUS_SENSOR_ANGLE = 6;
-	private static final int STATUS_BOAT_COLOR = 7;
-	private static final int STATUS_BOAT_QUEUE = 8;
+	public static final int STATUS_UNIT_ID = 0;
+	public static final int STATUS_SENSOR_BUTTON = 1;
+	public static final int STATUS_SENSOR_GYRO = 2;
+	public static final int STATUS_SENSOR_PASSAGE = 3;
+	public static final int STATUS_SENSOR_BOAT = 4;
+	public static final int STATUS_SENSOR_MOVE = 5;
+	public static final int STATUS_SENSOR_ANGLE = 6;
+	public static final int STATUS_BOAT_COLOR = 7;
+	public static final int STATUS_BOAT_QUEUE = 8;
 
 	
 	public BridgePanel panel;

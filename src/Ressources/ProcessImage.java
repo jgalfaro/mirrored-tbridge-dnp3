@@ -15,6 +15,11 @@ import com.automatak.dnp3.CounterInputQuality;
 import com.automatak.dnp3.DataObserver;
 import com.automatak.dnp3.Outstation;
 
+/**
+ * Process Image
+ * @author Ken LE PRADO ken@leprado.com
+ *
+ */
 public class ProcessImage {
 	private Vector<BinaryInput> m_BinaryInput = null;
 	private Vector<AnalogInput> m_AnalogInput = null;
@@ -24,6 +29,9 @@ public class ProcessImage {
 
 	private DataObserver m_DataObserver = null;
 	
+	/**
+	 * @param outstation Outstation Object
+	 */
 	public ProcessImage(Outstation outstation) {
 		m_DataObserver = outstation.getDataObserver();
 		m_BinaryInput = new Vector<BinaryInput>();
@@ -33,8 +41,10 @@ public class ProcessImage {
 		m_AnalogOutput = new Vector<AnalogOutputStatus>();
 	}
 	
-	//Binary Input
-	
+	/**
+	 * Add a Binary Input
+	 * @param value
+	 */
 	public void addBinaryInput(boolean value) {
 		BinaryInput binIn = new BinaryInput(value, BinaryInputQuality.ONLINE.toByte(), now());
 		m_BinaryInput.addElement(binIn);
@@ -44,10 +54,19 @@ public class ProcessImage {
 		m_DataObserver.end();
 	}
 
+	/**
+	 * Remove a Binary Input
+	 * @param BinIn Binary Input Object
+	 */
 	public void removeBinaryInput(BinaryInput BinIn) {
 		m_BinaryInput.removeElement(BinIn);		
 	}
 
+	/**
+	 * set a Binary Input value
+	 * @param ref Index of the value
+	 * @param value Value
+	 */
 	public void setBinaryInput(int ref, boolean value) {
 		BinaryInput binIn = new BinaryInput(value, BinaryInputQuality.ONLINE.toByte(), now());
 		m_BinaryInput.setElementAt(binIn, ref);			
@@ -55,10 +74,20 @@ public class ProcessImage {
 		m_DataObserver.update(binIn, ref);
 		m_DataObserver.end();
 	}
+	
+	/**
+	 * Return the value of the binary
+	 * @param ref Index of the value
+	 * @return Value
+	 */
 	public BinaryInput getBinaryInput(int ref) {
 		return m_BinaryInput.elementAt(ref);
 	}
 
+	/**
+	 * Number of binary objects
+	 * @return count the binary objects
+	 */
 	public Integer getBinaryInputCount() {
 		return m_BinaryInput.size();
 	}

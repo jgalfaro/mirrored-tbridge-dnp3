@@ -11,6 +11,11 @@ import com.automatak.dnp3.MasterStackConfig;
 import com.automatak.dnp3.StackState;
 
 public class Toll extends Device {
+	public static final int MODE_OFF = 0;
+	public static final int MODE_FREE = 1;
+	public static final int MODE_PAY = 2;
+	
+	
 	//Input Analog
 	public static final int STATUS_UNIT_ID = 0;
 	public static final int STATUS_COIN_COLOR = 1;
@@ -59,7 +64,7 @@ public class Toll extends Device {
 	public MasterStackConfig getDNP3Config() {
         // You can modify the defaults to change the way the master behaves
         MasterStackConfig config = new MasterStackConfig();
-        config.masterConfig.integrityRateMs = 10000; //Update refresh
+        config.masterConfig.integrityRateMs = 3000; //Update refresh
         config.masterConfig.enableUnsol = true;
 		return config;
 	}
@@ -78,10 +83,8 @@ public class Toll extends Device {
 	
 	@Override
 	public void setStatus(StackState state) {
-        System.out.println("********* * * * * * ***Master state: " + state);
         this.getPanel().changeStatus(state);
 		this.status = state;
-		
 	}
 
 }
