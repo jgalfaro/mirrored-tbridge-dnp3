@@ -9,9 +9,9 @@ import com.automatak.dnp3.CommandStatus;
 import com.automatak.dnp3.ControlRelayOutputBlock;
 
 public class TollCommandHandler implements CommandHandler{
-	private TollSim m_toll = null;
+	private RTUToll m_toll = null;
 	
-	public TollCommandHandler(TollSim toll) {
+	public TollCommandHandler(RTUToll toll) {
 		m_toll = toll;
 	}
 	@Override

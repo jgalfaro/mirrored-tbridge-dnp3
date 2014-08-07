@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import tollbridge.dnp3.master.ControlCenter;
 import tollbridge.dnp3.master.device.Device;
 import tollbridge.dnp3.master.device.Toll;
+import tollbridge.dnp3.outstation.RTUToll;
 
 /**
  * Toll Panel
@@ -141,11 +142,11 @@ public class TollPanel extends DevicePanel implements ActionListener {
 	 */
 	private void actionSetTollParam(String mode) {
 		if (mode == "Off") {
-			((Toll) myDevice).setStatusMode(Toll.MODE_OFF);
+			((Toll) myDevice).setStatusMode(RTUToll.MODE_OFF);
 		} else if (mode == "Free") {
-			((Toll) myDevice).setStatusMode(Toll.MODE_FREE);
+			((Toll) myDevice).setStatusMode(RTUToll.MODE_FREE);
 		} else if (mode == "Pay") {
-			((Toll) myDevice).setStatusMode(Toll.MODE_PAY);
+			((Toll) myDevice).setStatusMode(RTUToll.MODE_PAY);
 		}
 	}
 	
@@ -185,17 +186,17 @@ public class TollPanel extends DevicePanel implements ActionListener {
 	 */
 	public void showTollMode(int statusMode) {
 		switch (statusMode) {
-		case Toll.MODE_OFF:
+		case RTUToll.MODE_OFF:
 			btnTollOff.setBackground(Color.green);
 			btnTollFree.setBackground(Color.gray);
 			btnTollPay.setBackground(Color.gray);
 			break;
-		case Toll.MODE_FREE:
+		case RTUToll.MODE_FREE:
 			btnTollOff.setBackground(Color.gray);
 			btnTollFree.setBackground(Color.green);
 			btnTollPay.setBackground(Color.gray);
 			break;
-		case Toll.MODE_PAY:
+		case RTUToll.MODE_PAY:
 			btnTollOff.setBackground(Color.gray);
 			btnTollFree.setBackground(Color.gray);
 			btnTollPay.setBackground(Color.green);

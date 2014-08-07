@@ -60,11 +60,6 @@ public class Bridge extends Device {
 		return panel;
 	}
 	
-	public int getUnitId() {
-		//TODO à corriger
-		return 0;
-	}
-
 	/*
 	 * Return in degres the inclinaison of the bridge
 	 */

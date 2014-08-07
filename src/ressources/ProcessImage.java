@@ -1,4 +1,4 @@
-package Ressources;
+package ressources;
 
 import java.util.Vector;
 
@@ -68,6 +68,10 @@ public class ProcessImage {
 	 * @param value Value
 	 */
 	public void setBinaryInput(int ref, boolean value) {
+		//Any modification ?
+		if (getBinaryInput(ref).getValue() == value) {
+			return;
+		}
 		BinaryInput binIn = new BinaryInput(value, BinaryInputQuality.ONLINE.toByte(), now());
 		m_BinaryInput.setElementAt(binIn, ref);			
 		m_DataObserver.start();
@@ -109,6 +113,10 @@ public class ProcessImage {
 	}
 
 	public void setAnalogInput(int ref, double value) {
+		//Any modification ?
+		if (getAnalogInput(ref).getValue() == value) {
+			return;
+		}		
 		AnalogInput anaIn = new AnalogInput(value, AnalogInputQuality.ONLINE.toByte(), now());
 		m_AnalogInput.setElementAt(anaIn, ref);			
 		m_DataObserver.start();
@@ -139,6 +147,10 @@ public class ProcessImage {
 	}
 
 	public void setCounter(int ref, long value) {
+		//Any modification ?
+		if (getCounter(ref).getValue() == value) {
+			return;
+		}		
 		Counter cpt = new Counter(value, CounterInputQuality.ONLINE.toByte(), now());
 		m_Counter.setElementAt(cpt, ref);			
 		m_DataObserver.start();
@@ -179,6 +191,10 @@ public class ProcessImage {
 	}
 
 	public void setBinaryOutput(int ref, boolean value) {
+		//Any modification ?
+		if (getBinaryOutput(ref).getValue() == value) {
+			return;
+		}		
 		BinaryOutputStatus binOut = new BinaryOutputStatus(value, BinaryOutputStatusQuality.ONLINE.toByte(), now());
 		m_BinaryOutput.setElementAt(binOut, ref);			
 		m_DataObserver.start();
@@ -211,6 +227,10 @@ public class ProcessImage {
 	}
 
 	public void setAnalogOutput(int ref, double value) {
+		//Any modification ?
+		if (getAnalogOutput(ref).getValue() == value) {
+			return;
+		}		
 		AnalogOutputStatus anaOut = new AnalogOutputStatus(value, AnalogOutputStatusQuality.ONLINE.toByte(), now());
 		m_AnalogOutput.setElementAt(anaOut, ref);			
 		m_DataObserver.start();

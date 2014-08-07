@@ -1,6 +1,6 @@
 package tollbridge.dnp3.outstation;
 
-import Ressources.ProcessImage;
+import ressources.ProcessImage;
 
 import com.automatak.dnp3.Channel;
 import com.automatak.dnp3.ChannelState;
@@ -18,7 +18,7 @@ import com.automatak.dnp3.mock.PrintingLogSubscriber;
  * @author Ken LE PRADO
  * @version 1.0
  */
-abstract class Device {
+abstract class RTUDevice {
 	
 	private String deviceAddr = "";
 	
@@ -33,7 +33,7 @@ abstract class Device {
 	public ProcessImage procimg = null;
 	public int dnp3UnitId = 1;
 
-	public Device(String deviceAddr, int dnp3Port, int dnp3UnitId) {
+	public RTUDevice(String deviceAddr, int dnp3Port, int dnp3UnitId) {
 		this.deviceAddr = deviceAddr;
 
 		this.dnp3Port = dnp3Port;

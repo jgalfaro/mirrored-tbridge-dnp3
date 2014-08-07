@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 
 public class TollSimFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -3707693590333333107L;
-	private TollSim myDevice;
+	private RTUTollSim myDevice;
 	private Container content;
 	private JButton btnCoinValid;
 	private JButton btnCoinInvalid;
@@ -24,7 +24,7 @@ public class TollSimFrame extends JFrame implements ActionListener {
 	private JLabel picLabelBarrierOpen;
 	private JLabel picLabelBarrierClose;
 
-	TollSimFrame(TollSim myDevice) {
+	TollSimFrame(RTUTollSim myDevice) {
 		super();
 		this.myDevice = myDevice;
 		build();		

@@ -22,7 +22,7 @@ public class DeviceInit {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) {
-		Device device = null;
+		RTUDevice device = null;
 		
 		//Init config file
 		read_init("Device.ini");
@@ -30,7 +30,7 @@ public class DeviceInit {
 		/*if (deviceType.equals("TOLL")) {
 		    device = new Toll(deviceAddr, dnp3Active, dnp3Port, dnp3UnitId);
 		} else*/ if (deviceType.equals("TOLL_SIM")) {
-		    device = new TollSim(deviceAddr, dnp3Port, dnp3UnitId);
+		    device = new RTUTollSim(deviceAddr, dnp3Port, dnp3UnitId);
 		} /*else if (deviceType.equals("BRIDGE")) {
 		    device = new Bridge(deviceAddr, dnp3Active, dnp3Port, dnp3UnitId);
 		} else if (deviceType.equals("ROVER")) {

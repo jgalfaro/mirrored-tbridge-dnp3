@@ -1,6 +1,7 @@
 package tollbridge.dnp3.master;
 
 import tollbridge.dnp3.master.device.Toll;
+import tollbridge.dnp3.outstation.RTUToll;
 
 import com.automatak.dnp3.AnalogInput;
 import com.automatak.dnp3.AnalogOutputStatus;
@@ -36,7 +37,7 @@ public class TollDataObserver implements DataObserver {
     	System.out.println("Binary: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
 
     	switch ((int) index) {
-    	case Toll.STATUS_BARRIER:
+    	case RTUToll.STATUS_BARRIER:
     		m_Device.getPanel().showTollBarrier(meas.getValue());
     		break;
 	    }
@@ -48,7 +49,7 @@ public class TollDataObserver implements DataObserver {
     	System.out.println("Analog: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
 
     	switch ((int) index) {
-    	case Toll.STATUS_UNIT_ID:
+    	case RTUToll.STATUS_UNIT_ID:
     		m_Device.getPanel().setDeviceLabel((int) meas.getValue());
     		break;
 	    }
@@ -60,10 +61,10 @@ public class TollDataObserver implements DataObserver {
     	System.out.println("Counter: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
     	
     	switch ((int) index) {
-    	case Toll.STATUS_NB_CARS:
+    	case RTUToll.STATUS_NB_CARS:
     		m_Device.getPanel().getStatusCars().setText(Long.toString(meas.getValue()));
     		break;
-    	case Toll.STATUS_NB_COINS:
+    	case RTUToll.STATUS_NB_COINS:
 	    	m_Device.getPanel().getStatusCoins().setText(Long.toString(meas.getValue()));
 	    	break;
 	    }
@@ -81,7 +82,7 @@ public class TollDataObserver implements DataObserver {
     	System.out.println("AnalogOutputStatus: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
 
 		switch ((int) index) {
-    	case Toll.STATUS_MODE:
+    	case RTUToll.STATUS_MODE:
     		m_Device.getPanel().showTollMode((int) meas.getValue());
     		break;
 	    }

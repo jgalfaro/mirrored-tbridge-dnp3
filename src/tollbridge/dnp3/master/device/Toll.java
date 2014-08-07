@@ -5,34 +5,13 @@ import java.net.UnknownHostException;
 
 import tollbridge.dnp3.master.TollDataObserver;
 import tollbridge.dnp3.master.display.TollPanel;
+import tollbridge.dnp3.outstation.RTUToll;
 
 import com.automatak.dnp3.DataObserver;
 import com.automatak.dnp3.MasterStackConfig;
 import com.automatak.dnp3.StackState;
 
 public class Toll extends Device {
-	public static final int MODE_OFF = 0;
-	public static final int MODE_FREE = 1;
-	public static final int MODE_PAY = 2;
-	
-	
-	//Input Analog
-	public static final int STATUS_UNIT_ID = 0;
-	public static final int STATUS_COIN_COLOR = 1;
-	public static final int STATUS_CAR_PASSAGE = 2;
-	public static final int STATUS_KEY_PRESS = 3;
-	public static final int STATUS_CAR_PRESENTING = 4;
-
-	//Input Binary
-	public static final int STATUS_BARRIER = 0; 
-
-	//Output Analog
-	public static final int STATUS_MODE = 0;
-
-	//Counter Inputs
-	public static final int STATUS_NB_CARS = 0;
-	public static final int STATUS_NB_COINS = 1;
-
 	
 	public TollPanel panel;
 	
@@ -57,7 +36,7 @@ public class Toll extends Device {
 	}
 	
 	public void setStatusMode(int value) {
-		this.operate(STATUS_MODE, value);
+		this.operate(RTUToll.STATUS_MODE, value);
 	}
 	
 	@Override
@@ -73,12 +52,6 @@ public class Toll extends Device {
 	DataObserver setDNP3DataObserver() {
 		myDO = new TollDataObserver((Toll) this);
 		return null;
-	}
-
-	@Override
-	int getUnitId() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 	@Override
