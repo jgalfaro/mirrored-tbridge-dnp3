@@ -90,7 +90,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		content.add(btnBridgeMoveDown);
 				
 		//Waiting boat
-	    picWaitingBoat = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/boat.png"));
+	    picWaitingBoat = new JLabel( new ImageIcon( "data/images/boat.png"));
 	    picWaitingBoat.setBounds(250, 10, 50, 50);
 	    content.add(picWaitingBoat);
 		jlbBdgBoatWaiting = new JLabel();
@@ -99,10 +99,10 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 
 		
 		//Barrier up/down
-	    picLabelBarrierBridgeOpen = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/open_barrier.png"));
+	    picLabelBarrierBridgeOpen = new JLabel( new ImageIcon( "data/images/open_barrier.png"));
 		picLabelBarrierBridgeOpen.setBounds(10, 100, 60, 60);
 		content.add(picLabelBarrierBridgeOpen);
-		picLabelBarrierBridgeClose = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/close_barrier.png"));
+		picLabelBarrierBridgeClose = new JLabel( new ImageIcon( "data/images/close_barrier.png"));
 		picLabelBarrierBridgeClose.setBounds(10, 100, 60, 60);
 		content.add(picLabelBarrierBridgeClose);		
 		
@@ -117,7 +117,7 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		content.add(btnBridgeBarrierOff);
 		
 		//cars
-		JLabel picLabelBridgeCars = new JLabel( new ImageIcon( "/home/user/workspace/tollbridge-dnp3/src/Ressources/cars.png"));
+		JLabel picLabelBridgeCars = new JLabel( new ImageIcon( "data/images/cars.png"));
 		picLabelBridgeCars.setBounds(10, 220, 40, 25);
 		content.add(picLabelBridgeCars);
 

@@ -71,15 +71,15 @@ public class TollPanel extends DevicePanel implements ActionListener {
 		content.add(btnTollPay);
 		
 		//Barrier up/down
-	    picLabelBarrierOpen = new JLabel( new ImageIcon( "src/Ressources/open_barrier.png"));
+	    picLabelBarrierOpen = new JLabel( new ImageIcon( "data/images/open_barrier.png"));
 		picLabelBarrierOpen.setBounds(90, 25, 60, 60);
 		content.add(picLabelBarrierOpen);
-		picLabelBarrierClose = new JLabel( new ImageIcon( "src/Ressources/close_barrier.png"));
+		picLabelBarrierClose = new JLabel( new ImageIcon( "data/images/close_barrier.png"));
 		picLabelBarrierClose.setBounds(90, 25, 60, 60);
 		content.add(picLabelBarrierClose);		
 		
 		//coins
-		JLabel picLabelCoins = new JLabel( new ImageIcon( "src/Ressources/coins.png"));
+		JLabel picLabelCoins = new JLabel( new ImageIcon( "data/images/coins.png"));
 		picLabelCoins.setBounds(85, 90, 24, 24);
 		content.add(picLabelCoins);
 

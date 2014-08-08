@@ -1,6 +1,5 @@
 package tollbridge.dnp3.outstation.sensors;
 
-import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 
 

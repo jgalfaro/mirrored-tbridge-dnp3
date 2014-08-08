@@ -49,4 +49,57 @@ FAQ :
 	4. restart EV3
 		# reboot
 
+### With Ant ###
+Pb debian config
+http://eclipsedriven.blogspot.fr/2011/08/how-to-fix-ant-build-error-not-load.html
+
+
+### Opendnp3 1.1.x - Compile for Debian ###
+apt-get install libboost-all-dev
+cd dnp-1.1.x
+autoconf -f -i
+./configure
+make -j 3
+make install
+
+
+### Opendnp3 1.1.x - Cross Compiling ###
+Compiling app for EV3
+
+Environment for cross compiling :
+Help : https://wiki.debian.org/EmdebianToolchain
+Add repositories
+sudo apt-get install g++-4.4-arm-linux-gnueabi xapt
+Includes are located in /usr/arm-linux-gnueabi/include
+
+Libs environment for opendnp3
+sudo xapt -a armel -m libboost-all-dev
+Libs are installed in /usr/arm-linux-gnueabi/lib/
+
+Compile opendnp3
+cd dnp-1.1.x
+autoconf -f -i
+env CPPFLAGS="-I/usr/arm-linux-gnueabi/include" ./configure --host=arm-linux-gnueabi --build=x86_64-linux-gnu --with-boost-libdir=/usr/arm-linux-gnueabi/lib LDFLAGS="-lpthread" CXXFLAGS=-Os
+make -j 3
+
+Copy files to the EV3
+/usr/arm-linux-gnueabi/lib/libboost_system.so.1.49.0
+/usr/arm-linux-gnueabi/lib/libboost_prg_exec_monitor.so.1.49.0
+/usr/arm-linux-gnueabi/lib/libboost_unit_test_framework.so.1.49.0
+
+scp * root@toll1:
+
+Sur EV3 :
+mv libboost_* /usr/lib
+cd /usr/lib
+ln -s libboost_system.so.1.49.0 libboost_system.so
+
+Idem avec .libs compilé (libopendnp3)
+
+Idem avec .jar compilé
+scp *.jar root@toll1:
+
+
+
+
 

@@ -1,6 +1,5 @@
 package tollbridge.dnp3.outstation;
 
-import ressources.ProcessImage;
 
 import com.automatak.dnp3.DatabaseConfig;
 import com.automatak.dnp3.EventAnalogResponse;
