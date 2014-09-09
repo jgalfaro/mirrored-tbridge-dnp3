@@ -85,14 +85,27 @@ TODO Fill the command
 jrun tollbrige-dnp3
 ```
 ## Opendnp3 1.1.x - Compile for Debian ##
+
+**Compile Opendnp3**
 ```
-apt-get install libboost-all-dev autoconf libtool g++ m4 automake
-cd dnp-1.1.x
+sudo apt-get install libboost-all-dev autoconf libtool g++ m4 automake
+cd dnp-1.1.x/
 autoreconf -f -i
 ./configure
 make -j 3
-make install
+sudo make install
 ```
+
+**Compile Java Bindings**
+```
+sudo apt-get install maven
+set JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
+cd dnp-1.1.x/java
+mvn install
+```
+
+
+
 
 ## Opendnp3 1.1.x - Cross Compiling ##
 Compiling app for EV3
