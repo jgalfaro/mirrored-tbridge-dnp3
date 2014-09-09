@@ -40,54 +40,6 @@ public class ControlCenter {
 			}
 		});
 
-    	//for (;;) {
-    	//	TimeUnit.SECONDS.sleep(1);
-
-    		//Refresh Tolls Status
-/*
-    		Iterator<Toll> iter = tolls.iterator();
-    	    while (iter.hasNext()) {
-    	    	Toll toll = (Toll) iter.next();
-    	    	if (!toll.isConnected()) {
-    	    		delToll(toll);
-    	    	}
-    	    }
-  */
-    		
-    		/*
-    		//Refresh Bridge Status
-    		Iterator<Bridge> iterB = bridges.iterator();
-    	    while (iterB.hasNext()) {
-    	    	Bridge bridge = (Bridge) iterB.next();
-	    		if (bridge.isConnected()) {
-	    			
-	    			statusBarrier = bridge.getStatusBarrier();
-	    			statusBarrierMode = bridge.getStatusBarrierOpen();
-		    		nbCars = bridge.getStatusNbCars();
-		    		waitingBoat = bridge.getStatusWaitingBoat();
-		    		waitingBoatNb = bridge.getStatusBoatQueue();
-	    			statusMoving = bridge.getBridgeMoveDirection();
-		    		
-		    		Integer bridgeAngle = bridge.getBridgeAngle();
-		    		Integer bridgeGyroAngle = bridge.getStatusBridgeGyro();
-		    			
-		    		bridge.getPanel().showBridgeStatus(bridgeAngle, statusMoving, bridgeGyroAngle);
-		    		
-		    		bridge.getPanel().showBridgeActivation(bridge.getStatusActivate());
-		    		bridge.getPanel().showBridgeMode(bridge.getStatusBridgeMove(), bridge.getStatusBridgeRaise());
-		    		
-		    		bridge.getPanel().showBridgeBarrierMode(statusBarrierMode);
-		    		bridge.getPanel().showWaitingBoat(waitingBoat);
-		    		bridge.getPanel().setNbBoatWaiting(waitingBoatNb);
-		    		bridge.getPanel().showBridgeBarrier(statusBarrier);
-		    		bridge.getPanel().getStatusBridgeCars().setText(Integer.toString(nbCars));
-		    		
-	    		} else {
-	    			delBridge(bridge);
-	    		}
-    	    }
-    	    */
-    	//}
 	}	
 	
 	/**
@@ -118,6 +70,9 @@ public class ControlCenter {
 		return DNP3_Manager ;
 	}
 	
+	/**
+	 * Initialize DNP3 Manager
+	 */
 	private static void initDNP3() {
 	    // create the root class with a thread pool size of 1
 	    DNP3_Manager = DNP3ManagerFactory.createManager(1);

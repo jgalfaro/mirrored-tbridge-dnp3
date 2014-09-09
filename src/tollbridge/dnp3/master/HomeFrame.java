@@ -24,11 +24,14 @@ public class HomeFrame extends JFrame {
 		build();
 	}
 	
+	/**
+	 * Build the Control Center panel
+	 */
 	private void build(){
 		//Window properties
 		this.setTitle("Bridge Control Center"); 
 		this.setSize(700,400);
-		this.setLocationRelativeTo(null); 				//Center
+		this.setLocationRelativeTo(null); //Center
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -37,6 +40,9 @@ public class HomeFrame extends JFrame {
 		
 	}
 	
+	/**
+	 * Build the Menu
+	 */
 	private void buildMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		 
@@ -69,18 +75,20 @@ public class HomeFrame extends JFrame {
 
 		menuBar.add(menu1);		
 		
-		JMenuItem menuAbout = new JMenuItem("?");
-		menuBar.add(menuAbout);
+//		JMenuItem menuAbout = new JMenuItem("?");
+//		menuBar.add(menuAbout);
 
 		setJMenuBar(menuBar);	
 				
 	}
 	
+	/**
+	 * Build the content Panel
+	 */
 	private void buildContentPanel () {
 		content = getContentPane();
 
 		content.setLayout(null);
-		//content.setBackground(Color.WHITE);
 		
 		messageLog = new JTextArea();
 		messageLog.setBounds(5, 5, 100, 300);
@@ -89,11 +97,19 @@ public class HomeFrame extends JFrame {
 		content.add(messageLog);
 
 	}
-	
+
+	/**
+	 * Access to the Content panel
+	 * @return content panel
+	 */
 	public Container getContent() {
 		return content;
 	}
 
+	/** 
+	 * Add string to the message window
+	 * @param message
+	 */
 	public void addMessage(String message) {
 		
 		String currentText = messageLog.getText();

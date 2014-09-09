@@ -19,12 +19,11 @@ import com.automatak.dnp3.MasterStackConfig;
 import com.automatak.dnp3.StackState;
 
 /**
- * Device
+ * Device definition abstraction
  * @author Ken LE PRADO
  *
  */
 public abstract class Device {
-
 	private InetAddress address = null;
 	private int port = 0;
 	private Channel channel = null;
@@ -166,7 +165,7 @@ public abstract class Device {
     }
     
     /**
-     * Perform a DNP3 Integrity Scan
+     * Perform a DNP3 Integrity Scan (reception of all values)
      */
     public void integrityScan() {
     	master.performIntegrityScan();    	

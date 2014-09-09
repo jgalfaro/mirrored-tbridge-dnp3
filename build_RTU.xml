@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="tollbridge-dnp3" basedir="." default="compile">
     <property name="source.dir"     value="src"/>
-    <property name="lib.dir"        value="/home/user/Ressources/lejos/leJOS_EV3_0.8.1-beta/lib/ev3"/>
+    <property name="libEV3.dir"        value="/home/ken/workspace/leJOS_EV3_0.8.1-beta/lib/ev3"/>
+    <property name="lib.dir"        value="lib"/>
     <property name="class.dir"      value="bin"/>
     <property name="jar.dir"        value="dist"/>
-    <property name="main-class"     value="ControlCenter"/>
+    <property name="main-class"     value="tollbridge.dnp3.outstation.DeviceDNP3Init"/>
     <property name="lejos.home"     value="/home/user/lejos"/>
     <property name="ev3.host"       value="10.0.10.11"/>
-    <property name="docs.dir"        value="doc"/>
 	
     <path id="libraries.path">    
-        <fileset dir="${lib.dir}">
+        <fileset dir="${libEV3.dir}">
             <include name="*.jar"/>
         </fileset>
-        <fileset dir="/home/user/workspace/tollbridge-dnp3/lib">
+        <fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
     </path>
 	
     <target name="clean" description="delete old files">
         <delete dir="${class.dir}"/>
-        <delete dir="${jar.dir}"/>
+        <delete dir="${jar.dir}/${ant.project.name}.jar"/>
     </target>
 
     <target name="compile" description="build class files" depends="clean">
@@ -48,13 +48,4 @@
         </scp>
     </target>
 	
-	<!-- Creates Javadoc -->
-	  <target name="docs" description="generate Javadoc">
-	    <javadoc packagenames="src" sourcepath="${source.dir}" destdir="${docs.dir}">
-	      <!-- Define which files / directory should get included, we include all -->
-	       <fileset dir="${source.dir}">
-	                <include name="**" />
-	           </fileset>
-	    </javadoc>
-	  </target>
 </project>

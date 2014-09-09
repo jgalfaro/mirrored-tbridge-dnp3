@@ -11,14 +11,15 @@ import com.automatak.dnp3.Counter;
 import com.automatak.dnp3.DataObserver;
 
 /**
- * Data Observer for a Toll
+ * DNP3 Data Observer for a Toll
+ *     a Data Observer is invoked when a DNP3 message is 
+ *     received from a RTU
  * @author Ken LE PRADO
- *
  */
 public class TollDataObserver implements DataObserver {
 	private Toll m_Device;
 	/**
-	 * @param myDevice Device refering to
+	 * @param myDevice Device referring to
 	 */
 	public TollDataObserver(Toll myDevice) {
 		m_Device = myDevice;
@@ -32,6 +33,13 @@ public class TollDataObserver implements DataObserver {
         System.out.println("Start transaction");
     }
 
+    /**
+     * Call at the reception of :
+     *    Function Code : update
+     *    Object Type : BinaryInput
+     * @param meas Object received
+     * @param index Index
+     */
     public void update(BinaryInput meas, long index)
     {
     	System.out.println("Binary: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
@@ -44,6 +52,13 @@ public class TollDataObserver implements DataObserver {
     
     }
 
+    /**
+     * Call at the reception of :
+     *    Function Code : update
+     *    Object Type : AnalogInput
+     * @param meas Object received
+     * @param index Index
+     */
     public void update(AnalogInput meas, long index)
     {
     	System.out.println("Analog: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
@@ -55,7 +70,14 @@ public class TollDataObserver implements DataObserver {
 	    }
 
     }
-
+    
+    /**
+     * Call at the reception of :
+     *    Function Code : update
+     *    Object Type : Counter
+     * @param meas Object received
+     * @param index Index
+     */
     public void update(Counter meas, long index)
     {
     	System.out.println("Counter: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
@@ -71,12 +93,26 @@ public class TollDataObserver implements DataObserver {
     	
     }
 
+    /**
+     * Call at the reception of :
+     *    Function Code : update
+     *    Object Type : BinaryOutputStatus
+     * @param meas Object received
+     * @param index Index
+     */
     public void update(BinaryOutputStatus meas, long index)
     {
     	System.out.println("BinaryOutputStatus: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
     	
     }
 
+    /**
+     * Call at the reception of :
+     *    Function Code : update
+     *    Object Type : AnalogOutputStatus
+     * @param meas Object received
+     * @param index Index
+     */
     public void update(AnalogOutputStatus meas, long index)
     {
     	System.out.println("AnalogOutputStatus: " + meas.getValue() + " Index: " + index + " Timestamp: " + meas.getMsSinceEpoch());
