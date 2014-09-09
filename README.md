@@ -86,9 +86,9 @@ jrun tollbrige-dnp3
 ```
 ## Opendnp3 1.1.x - Compile for Debian ##
 ```
-apt-get install libboost-all-dev
+apt-get install libboost-all-dev autoconf libtool g++ m4 automake
 cd dnp-1.1.x
-autoconf -f -i
+autoreconf -f -i
 ./configure
 make -j 3
 make install
@@ -113,7 +113,7 @@ Libs are installed in /usr/arm-linux-gnueabi/lib/
 Compile opendnp3
 ```
 cd dnp-1.1.x
-autoconf -f -i
+autoreconf -f -i
 env CPPFLAGS="-I/usr/arm-linux-gnueabi/include" ./configure --host=arm-linux-gnueabi --build=x86_64-linux-gnu --with-boost-libdir=/usr/arm-linux-gnueabi/lib LDFLAGS="-lpthread" CXXFLAGS=-Os
 make -j 3
 ```
