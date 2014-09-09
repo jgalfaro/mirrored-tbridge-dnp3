@@ -50,7 +50,7 @@ FAQ :
 		# reboot
 
 ### With Ant ###
-[[http://eclipsedriven.blogspot.fr/2011/08/how-to-fix-ant-build-error-not-load.html|Debian configuration]]
+[Debian configuration](http://eclipsedriven.blogspot.fr/2011/08/how-to-fix-ant-build-error-not-load.html)
 
 
 ### Opendnp3 1.1.x - Compile for Debian ###
@@ -66,7 +66,7 @@ make install
 ### Opendnp3 1.1.x - Cross Compiling ###
 Compiling app for EV3
 
-Environment for cross compiling : [[https://wiki.debian.org/EmdebianToolchain|Confi help]]
+Environment for cross compiling : [Configuration help](https://wiki.debian.org/EmdebianToolchain)
 Add repositories
 <code>
 sudo apt-get install g++-4.4-arm-linux-gnueabi xapt
@@ -106,10 +106,7 @@ ln -s libboost_system.so.1.49.0 libboost_system.so
 Idem avec .libs compilé (libopendnp3)
 
 Idem avec .jar compilé
-<code>
+
+```
 scp *.jar root@toll1:
-</code>
-
-
-
-
+```
