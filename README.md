@@ -91,7 +91,7 @@ jrun tollbrige-dnp3
 sudo apt-get install libboost-all-dev autoconf libtool g++ m4 automake
 cd dnp-1.1.x/
 autoreconf -f -i
-./configure
+./configure --with-java=javac
 make -j 3
 sudo make install
 ```
@@ -101,6 +101,7 @@ sudo make install
 sudo apt-get install maven
 set JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
 cd dnp-1.1.x/java
+mvn package
 mvn install
 ```
 
