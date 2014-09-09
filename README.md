@@ -7,6 +7,10 @@ It implements :
 * a Lego EV3 toll, (Not yet)
 * a Simulated toll.
 
+## References ##
+* EV3 API [Lejos](http://www.lejos.org)
+* DNP3 API [opendnp3](http://www.automatak.com/opendnp3/)
+
 ## How do I get set up? ##
 
 help for installation of Lejos environnement on : http://thinkbricks.net/?p=826
