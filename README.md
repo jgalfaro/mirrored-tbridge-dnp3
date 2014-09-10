@@ -24,7 +24,7 @@ help for installation of Lejos environnement on : http://thinkbricks.net/?p=826
 	1. Follow instructions to start Lejos :
 		a. prepare SD card (sd500.img)
 		b. copy Lejos files
-		c. copy Embedded JRE
+		c. copy [Embedded JRE](http://java.com/legomindstorms)
 		d. Start EV3 with Micro SD
 		e. Proceed to configuration (see FAQ)
 	2. Configure Lejos
