@@ -27,7 +27,7 @@ public class RTUTollSim extends RTUToll {
 		window.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * EV3 Initialisation
 	 */
 	@Override
@@ -35,7 +35,7 @@ public class RTUTollSim extends RTUToll {
 		//Nothing to do
 	}
 
-	/*
+	/**
 	 * EV3 Close
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class RTUTollSim extends RTUToll {
 		//Nothing to do
 	}
 	
-	/*
+	/**
 	 * Thread to manage the device
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class RTUTollSim extends RTUToll {
 		barrierDown();
 	}
 
-	/*
+	/**
 	 * draw screen
 	 */
 	public void drawScreen() {
@@ -141,7 +141,6 @@ public class RTUTollSim extends RTUToll {
 	
 	public void barrierUp() {
 		if (this.procimg.getBinaryInput(RTUToll.STATUS_BARRIER).getValue() == false) {
-//			barrierMotor.rotate(+ BARRIER_ANGLE);
 			this.procimg.setBinaryInput(RTUToll.STATUS_BARRIER, true);
 		}
 	}
@@ -151,7 +150,6 @@ public class RTUTollSim extends RTUToll {
 	 */
 	public void barrierDown() {
 		if (this.procimg.getBinaryInput(RTUToll.STATUS_BARRIER).getValue() == true) {
-//			barrierMotor.rotate(- BARRIER_ANGLE);		
 			this.procimg.setBinaryInput(RTUToll.STATUS_BARRIER, false);
 		}
 	}
@@ -177,10 +175,7 @@ public class RTUTollSim extends RTUToll {
 	 * Increase counter if a car has gone 
 	 */
 	public void addCar() {
-		this.procimg.incCounter(RTUToll.STATUS_NB_CARS);
-				
-		// car_passage == 0 : wait for car to free the sensor
-//		while (this.spi.getInputRegister(STATUS_CAR_PASSAGE).getValue() == 1);
+		this.procimg.incCounter(RTUToll.STATUS_NB_CARS);				
 		this.procimg.setAnalogInput(RTUToll.STATUS_CAR_PASSAGE, 0);
 
 	}
@@ -219,5 +214,9 @@ public class RTUTollSim extends RTUToll {
 
 	}
 
-	
+
+	@Override
+	public void associateSensors() {
+		//No sensor to listen		
+	}	
 }

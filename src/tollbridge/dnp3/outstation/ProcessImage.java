@@ -16,7 +16,9 @@ import com.automatak.dnp3.DataObserver;
 import com.automatak.dnp3.Outstation;
 
 /**
- * Process Image
+ * Process Image for DNP3, 
+ *    Used to store the registers, emit DNP3 message in case 
+ *    of modification
  * @author Ken LE PRADO ken@leprado.com
  *
  */
@@ -98,7 +100,10 @@ public class ProcessImage {
 	
 
 	//Analog Input
-	
+	/**
+	 * Add an Analog Input
+	 * @param value
+	 */
 	public void addAnalogInput(double value) {
 		AnalogInput anaIn = new AnalogInput(value, AnalogInputQuality.ONLINE.toByte(), now());
 		m_AnalogInput.addElement(anaIn);
@@ -113,7 +118,7 @@ public class ProcessImage {
 	}
 
 	public void setAnalogInput(int ref, double value) {
-		//Any modification ?
+		//Any modification to the register ?
 		if (getAnalogInput(ref).getValue() == value) {
 			return;
 		}		
@@ -123,16 +128,30 @@ public class ProcessImage {
 		m_DataObserver.update(anaIn, ref);
 		m_DataObserver.end();
 	}
+	
+	/**
+	 * Get an Analog Input
+	 * @param ref index of the object
+	 * @return AnalogInput at the ref
+	 */
 	public AnalogInput getAnalogInput(int ref) {
 		return m_AnalogInput.elementAt(ref);
 	}
-
+	
+	/**
+	 * Get count of Analog Input registers
+	 * @return Number of registers
+	 */
 	public Integer getAnalogInputCount() {
 		return m_AnalogInput.size();
 	}
 	
 	
 	//Counter
+	/**
+	 * Add a Counter
+	 * @param value
+	 */
 	public void addCounter(long value) {
 		Counter cpt = new Counter(value, CounterInputQuality.ONLINE.toByte(), now());
 		m_Counter.addElement(cpt);
@@ -177,6 +196,10 @@ public class ProcessImage {
 	
 	
 	//Output Binary
+	/**
+	 * Add a Binary Output
+	 * @param value
+	 */
 	public void addBinaryOutput(boolean value) {
 		BinaryOutputStatus binOut = new BinaryOutputStatus(value, BinaryOutputStatusQuality.ONLINE.toByte(), now());
 		m_BinaryOutput.addElement(binOut);
@@ -211,8 +234,11 @@ public class ProcessImage {
 	
 	
 
-	//Analog Input
-	
+	//Analog Output
+	/**
+	 * Add an Analog Input
+	 * @param value
+	 */
 	public void addAnalogOutput(double value) {
 		AnalogOutputStatus anaOut = new AnalogOutputStatus(value, AnalogOutputStatusQuality.ONLINE.toByte(), now());
 		m_AnalogOutput.addElement(anaOut);

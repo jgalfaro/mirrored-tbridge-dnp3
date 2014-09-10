@@ -11,6 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+/**
+ * Panel for the toll sim
+ * @author Ken LE PRADO1
+ *
+ */
 public class TollSimFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -3707693590333333107L;
 	private RTUTollSim myDevice;

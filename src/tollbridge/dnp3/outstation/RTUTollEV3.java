@@ -1,5 +1,8 @@
 package tollbridge.dnp3.outstation;
 
+import tollbridge.dnp3.outstation.sensors.SensorColor;
+import tollbridge.dnp3.outstation.sensors.SensorTouch;
+import tollbridge.dnp3.outstation.sensors.SensorUltrasonic;
 import lejos.hardware.Audio;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
@@ -42,6 +45,7 @@ public class RTUTollEV3 extends RTUToll {
 	public void initEV3() {		
 		this.ev3 = (EV3) BrickFinder.getDefault();
 		this.loadEV3();
+	
 	}
 
 	/*
@@ -101,7 +105,6 @@ public class RTUTollEV3 extends RTUToll {
 					coinColorId = coinColorSensor.getColorID();
 					dist = (int) this.procimg.getAnalogInput(RTUToll.STATUS_CAR_PRESENTING).getValue();
 					if (refColorId != coinColorId && dist < 15) {
-						//System.out.println("New coin");
 						if (isValidCoin(coinColorId)) {
 							//System.out.println("Coin accepted");
 							eatCoin();
@@ -165,9 +168,9 @@ public class RTUTollEV3 extends RTUToll {
 		}
 	}
 
-/**
- * Activate motors to eat inserted coin (and increase counter associated)
- */
+	/**
+	 * Activate motors to eat inserted coin (and increase counter associated)
+	 */
 	public void eatCoin() {
 		this.procimg.incCounter(RTUToll.STATUS_NB_COINS);
 
@@ -198,6 +201,15 @@ public class RTUTollEV3 extends RTUToll {
 	public void beep() {
 		Audio audio = this.ev3.getAudio();
 		audio.systemSound(0);
+	}
+
+	@Override
+	public void associateSensors() {
+		
+		this.sensorThread.addSensor(new SensorColor(coinColorSensor));
+		this.sensorThread.addSensor(new SensorTouch(passageTouchSensor));
+		this.sensorThread.addSensor(new SensorUltrasonic(distanceUSSensor));
+		
 	}
 
 }

@@ -8,9 +8,16 @@ import com.automatak.dnp3.CommandHandler;
 import com.automatak.dnp3.CommandStatus;
 import com.automatak.dnp3.ControlRelayOutputBlock;
 
+/**
+ * Receiver of DNP3 commands
+ * @author Ken LE PRADO
+ */
 public class TollCommandHandler implements CommandHandler{
 	private RTUToll m_toll = null;
 	
+	/**
+	 * @param toll Device running
+	 */
 	public TollCommandHandler(RTUToll toll) {
 		m_toll = toll;
 	}

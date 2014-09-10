@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import tollbridge.dnp3.outstation.sensors.SensorUpdater;
+
 /**
  * Main class for Outstation
  * @author Ken LE PRADO ken@leprado.com
@@ -31,7 +33,7 @@ public class DeviceDNP3Init {
 	 * Toll run
 	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		RTUDevice device = null;
 		
 		//Init config file
@@ -53,12 +55,18 @@ public class DeviceDNP3Init {
 		if (device != null) {
 			device.initEV3();
 			
+			device.sensorThread = new SensorUpdater();
+			device.sensorThread.start();
+
 			device.initDnp3();
 			
 			
 			device.beep();
 			device.run();
 			device.beep();
+			
+			device.sensorThread.stopCheck();
+			device.sensorThread.join();
 			
 			device.stopDnp3();
 

@@ -1,6 +1,8 @@
 package tollbridge.dnp3.outstation;
 
 
+import tollbridge.dnp3.outstation.sensors.SensorUpdater;
+
 import com.automatak.dnp3.Channel;
 import com.automatak.dnp3.ChannelState;
 import com.automatak.dnp3.ChannelStateListener;
@@ -31,6 +33,8 @@ abstract class RTUDevice {
 	private int dnp3NbThread = 2;
 	public ProcessImage procimg = null;
 	public int dnp3UnitId = 1;
+	
+	public SensorUpdater sensorThread = null;
 
 	/**
 	 * Constructor
@@ -118,4 +122,8 @@ abstract class RTUDevice {
 	 */
 	abstract public void beep();
 
+	/**
+	 * Associate EV3 sensors to Process Image
+	 */
+	abstract public void associateSensors();
 }
