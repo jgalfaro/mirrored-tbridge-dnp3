@@ -11,14 +11,20 @@ import java.util.Properties;
  *
  */
 public class DeviceDNP3Init {
-	//Network address (127.0.0.1, etc.)
+	/**
+	 * Network address (127.0.0.1, etc.)
+	 */
 	private static String deviceAddr = "";
 	
-	//DNP3 params
+	/**
+	 * DNP3 params
+	 */
 	private static int dnp3Port = 20000;
 	private static int dnp3UnitId = 1;
 
-	//Type of device (Toll, Bridge, TollSim, Rover)
+	/**
+	 * Type of device (Toll, Bridge, TollSim, Rover)
+	 */
 	private static String deviceType = "";
 		
 	/**
@@ -35,6 +41,7 @@ public class DeviceDNP3Init {
 		    device = new RTUTollEV3(deviceAddr, dnp3Port, dnp3UnitId);
 		} else if (deviceType.equals("TOLL_SIM")) {
 		    device = new RTUTollSim(deviceAddr, dnp3Port, dnp3UnitId);
+//TODO Add new devices		    
 //		} else if (deviceType.equals("BRIDGE")) {
 //		    device = new Bridge(deviceAddr, dnp3Port, dnp3UnitId);
 //		} else if (deviceType.equals("ROVER")) {

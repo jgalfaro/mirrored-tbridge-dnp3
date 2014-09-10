@@ -13,7 +13,7 @@ import com.automatak.dnp3.impl.DNP3ManagerFactory;
 import com.automatak.dnp3.mock.PrintingLogSubscriber;
 
 /**
- * Defines a device
+ * Defines a generic device
  * @author Ken LE PRADO
  * @version 1.0
  */
@@ -32,18 +32,20 @@ abstract class RTUDevice {
 	public ProcessImage procimg = null;
 	public int dnp3UnitId = 1;
 
+	/**
+	 * Constructor
+	 * @param deviceAddr Network address
+	 * @param dnp3Port Network port
+	 * @param dnp3UnitId DNP3 Unit Id
+	 */
 	public RTUDevice(String deviceAddr, int dnp3Port, int dnp3UnitId) {
 		this.deviceAddr = deviceAddr;
-
 		this.dnp3Port = dnp3Port;
 		this.dnp3UnitId = dnp3UnitId;
-
 	}
 	
-	
-
-	/*
-	 * DNP3 initialisation
+	/**
+	 * DNP3 initialization
 	 */
 	public void initDnp3() {
         // create the root class with a thread pool size of 1
@@ -81,7 +83,7 @@ abstract class RTUDevice {
 		
 	}
 
-	/*
+	/**
 	 * DNP3 unload
 	 */
 	public void stopDnp3() {
@@ -91,24 +93,27 @@ abstract class RTUDevice {
 	
 	abstract public void initDnp3Config();
 		
-	/*
-	 * EV3 Initialisation
+	/**
+	 * EV3 Initialization
 	 */
 	abstract public void initEV3();
 	
+	/**
+	 * EV3 Configuration
+	 */
 	abstract public void loadEV3();
 
-	/*
+	/**
 	 * EV3 Close
 	 */
 	abstract public void stopEV3();
 	
-	/*
+	/**
 	 * Thread to manage the device
 	 */
 	abstract public void run();
 
-	/*
+	/**
 	 * Sounds a beep
 	 */
 	abstract public void beep();

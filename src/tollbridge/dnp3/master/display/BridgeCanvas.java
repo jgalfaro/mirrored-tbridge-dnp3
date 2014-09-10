@@ -5,12 +5,21 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+/**
+ * Canvas for bridge
+ * @author ken
+ *
+ */
 public class BridgeCanvas extends JPanel {
 	private static final long serialVersionUID = 8695090553402617092L;
 	private int angle = 0;
 	private int moving = 0;
 	private int gyroAngle = 0;	
 	
+	/**
+	 * Draw the status of the bridge
+	 * Called at each refresh
+	 */
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		
@@ -52,6 +61,12 @@ public class BridgeCanvas extends JPanel {
 
 	}
 
+	/**
+	 * Return the minimum value of a or b
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private int min(int a, int b) {
 		if (a > b) {
 			return b;
@@ -60,6 +75,12 @@ public class BridgeCanvas extends JPanel {
 		}
 	}
 
+	/**
+	 * Update the status of the bridge
+	 * @param angle
+	 * @param moving
+	 * @param gyroAngle
+	 */
 	public void setStatus(int angle, int moving, int gyroAngle) {
 		this.angle = angle;
 		this.moving = moving;

@@ -182,7 +182,6 @@ public class BridgePanel extends DevicePanel implements ActionListener {
 		*/
 	}
 	
-	
 	public JLabel getStatusBridgeCars(){
 		return jlbStatusBridgeCars;
 	}	
