@@ -11,7 +11,7 @@ It implements :
 * EV3 API [Lejos](http://www.lejos.org)
 * DNP3 API [opendnp3](http://www.automatak.com/opendnp3/)
 
-## How do I get set up? ##
+## How do I get set up EV3? ##
 
 help for installation of Lejos environnement on : http://thinkbricks.net/?p=826
 
@@ -91,7 +91,7 @@ jrun tollbrige-dnp3
 sudo apt-get install libboost-all-dev autoconf libtool g++ m4 automake
 cd dnp-1.1.x/
 autoreconf -f -i
-./configure --with-java=javac
+./configure --enable-java --with-javac=/usr/bin/javac
 make -j 3
 sudo make install
 ```
@@ -99,12 +99,15 @@ sudo make install
 **Compile Java Bindings**
 ```
 sudo apt-get install maven
-set JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
 cd dnp-1.1.x/java
 mvn package
 mvn install
 ```
-
+Then copy the jar produced :
+```
+cp dnp-1.1.x/java/api/targets/*.jar dnp-1.1.x/java/bindings/targets/*.jar tollbridge-dnp3/lib
+```
 
 
 
@@ -120,7 +123,7 @@ Includes are located in /usr/arm-linux-gnueabi/include
 
 Libs environment for opendnp3
 ```
-sudo xapt -a armel -m libboost-all-dev
+sudo xapt -a armel -m libboost-all-dev java-common-armel-cross
 ```
 Libs are installed in /usr/arm-linux-gnueabi/lib/
 
@@ -128,7 +131,7 @@ Compile opendnp3
 ```
 cd dnp-1.1.x
 autoreconf -f -i
-env CPPFLAGS="-I/usr/arm-linux-gnueabi/include" ./configure --host=arm-linux-gnueabi --build=x86_64-linux-gnu --with-boost-libdir=/usr/arm-linux-gnueabi/lib LDFLAGS="-lpthread" CXXFLAGS=-Os
+env CPPFLAGS="-I/usr/arm-linux-gnueabi/include" ./configure --host=arm-linux-gnueabi --build=x86_64-linux-gnu --with-boost-libdir=/usr/arm-linux-gnueabi/lib LDFLAGS="-lpthread" CXXFLAGS=-Os --enable-java
 make -j 3
 ```
 
@@ -137,10 +140,8 @@ Copy files to the EV3
 /usr/arm-linux-gnueabi/lib/libboost_system.so.1.49.0
 /usr/arm-linux-gnueabi/lib/libboost_prg_exec_monitor.so.1.49.0
 /usr/arm-linux-gnueabi/lib/libboost_unit_test_framework.so.1.49.0
-
 scp * root@toll1:
 ```
-
 Sur EV3 :
 ```
 mv libboost_* /usr/lib
