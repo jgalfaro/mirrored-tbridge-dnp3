@@ -14,8 +14,9 @@ public final class SensorUltrasonic extends Sensor {
 	private float[] distance = { 0 };
 	private SampleProvider distanceProvider;
 
-	public SensorUltrasonic(EV3UltrasonicSensor mySensor) {
+	public SensorUltrasonic(EV3UltrasonicSensor mySensor, int index) {
 	    this.sensor = mySensor;
+	    this.m_analogIndex = index;
 	    
         this.distanceProvider = sensor.getDistanceMode();
 

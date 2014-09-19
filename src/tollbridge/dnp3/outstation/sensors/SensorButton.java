@@ -9,7 +9,8 @@ import lejos.hardware.Button;
  */
 public final class SensorButton extends Sensor {
 
-	public SensorButton() {
+	public SensorButton(int index) {
+		m_analogIndex = index;
 	}//constructor
 
 	@Override

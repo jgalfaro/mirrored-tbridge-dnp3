@@ -113,19 +113,32 @@ cp dnp-1.1.x/java/api/targets/*.jar dnp-1.1.x/java/bindings/targets/*.jar tollbr
 
 ## Opendnp3 1.1.x - Cross Compiling ##
 Compiling app for EV3
+EV3 is armv5 instruction set
 
 Environment for cross compiling : [Configuration help](https://wiki.debian.org/EmdebianToolchain)
 Add repositories
 ```
 sudo apt-get install g++-4.4-arm-linux-gnueabi xapt
 ```
-Includes are located in /usr/arm-linux-gnueabi/include
 
 Libs environment for opendnp3
 ```
-sudo xapt -a armel -m libboost-all-dev java-common-armel-cross
+sudo xapt -a armel -m libboost-all-dev 
+??? sudo xapt -a armel -m openjdk-7-jdk 
+??? sudo apt-get install openjdk-7-dbg
 ```
+
+---autre solution
+Get jdk from : http://www.oracle.com/technetwork/java/javase/downloads/jdk7-arm-downloads-2187468.html
+Extract JDK-7 for ARM
+cp ./includes/jni_md.h ./includes
+env CPPFLAGS="-I/usr/arm-linux-gnueabi/include" ./configure --host=arm-linux-gnueabi --build=x86_64-linux-gnu --with-boost-libdir=/usr/arm-linux-gnueabi/lib LDFLAGS="-lpthread" CXXFLAGS=-Os --enable-java --with-jni-include-path=/path-ofjdk-extracted/includes
+
+---fin autre
+
+
 Libs are installed in /usr/arm-linux-gnueabi/lib/
+Includes are located in /usr/arm-linux-gnueabi/include
 
 Compile opendnp3
 ```
@@ -149,7 +162,22 @@ cd /usr/lib
 ln -s libboost_system.so.1.49.0 libboost_system.so
 ```
 
-Idem avec .libs compilé (libopendnp3)
+Idem avec .libs compilé (libopendnp3.so et libopendnp3java.so)
+Depuis environnement de compilation :
+```
+scp ./.libs/libopendnp3.so.1.0.1 ./.libs/libopendnp3java.so.1.0.1 root@10.0.10.11:/usr/lib
+```
+Depuis EV3 :
+```
+cd /usr/lib
+ln -s libopendnp3java.so libopendnp3java.so.1.0.1
+ln -s libopendnp3java.so.1 libopendnp3java.so.1.0.1
+ln -s libopendnp3.so libopendnp3.so.1.0.1
+ln -s libopendnp3.so.1 libopendnp3.so.1.0.1
+
+
+```
+
 
 Idem avec .jar compilé
 

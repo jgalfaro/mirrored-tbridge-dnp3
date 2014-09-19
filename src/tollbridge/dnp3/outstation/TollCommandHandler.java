@@ -23,7 +23,6 @@ public class TollCommandHandler implements CommandHandler{
 	}
 	@Override
 	public CommandStatus directOperate(ControlRelayOutputBlock arg0, long arg1) {
-		// TODO Auto-generated method stub
 		return CommandStatus.UNDEFINED;
 	}
 

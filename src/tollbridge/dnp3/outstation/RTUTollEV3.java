@@ -1,5 +1,6 @@
 package tollbridge.dnp3.outstation;
 
+import tollbridge.dnp3.outstation.sensors.SensorButton;
 import tollbridge.dnp3.outstation.sensors.SensorColor;
 import tollbridge.dnp3.outstation.sensors.SensorTouch;
 import tollbridge.dnp3.outstation.sensors.SensorUltrasonic;
@@ -204,12 +205,11 @@ public class RTUTollEV3 extends RTUToll {
 	}
 
 	@Override
-	public void associateSensors() {
-		
-		this.sensorThread.addSensor(new SensorColor(coinColorSensor));
-		this.sensorThread.addSensor(new SensorTouch(passageTouchSensor));
-		this.sensorThread.addSensor(new SensorUltrasonic(distanceUSSensor));
-		
+	public void associateSensors() {		
+		this.sensorThread.addSensor(new SensorColor(coinColorSensor, STATUS_COIN_COLOR));
+		this.sensorThread.addSensor(new SensorTouch(passageTouchSensor, STATUS_CAR_PASSAGE));
+		this.sensorThread.addSensor(new SensorButton(STATUS_KEY_PRESS));
+		this.sensorThread.addSensor(new SensorUltrasonic(distanceUSSensor, STATUS_CAR_PRESENTING));
 	}
 
 }

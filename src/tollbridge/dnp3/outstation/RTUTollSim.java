@@ -217,6 +217,6 @@ public class RTUTollSim extends RTUToll {
 
 	@Override
 	public void associateSensors() {
-		//No sensor to listen		
+		//No sensor to listen to
 	}	
 }

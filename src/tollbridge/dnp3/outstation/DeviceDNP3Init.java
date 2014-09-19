@@ -55,7 +55,7 @@ public class DeviceDNP3Init {
 		if (device != null) {
 			device.initEV3();
 			
-			device.sensorThread = new SensorUpdater();
+			device.sensorThread = new SensorUpdater(device.procimg);
 			device.sensorThread.start();
 
 			device.initDnp3();

@@ -198,7 +198,7 @@ public class Bridge extends Device {
 	@Override
 	public void setStatus(StackState state) {
         System.out.println("********* * * * * * ***Master state: " + state);
-//TODO Add this to the Bridge Panel
+        //TODO Add this to the Bridge Panel
        // this.getPanel().changeStatus(state);
 		this.status = state;
 		

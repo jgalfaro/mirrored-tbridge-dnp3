@@ -43,8 +43,6 @@ public abstract class RTUToll extends RTUDevice {
 	
 	@Override
 	public void initDnp3Config() {
-		// TODO Auto-generated method stub
-
         // Create the default outstation configuration
         dnp3Config = new OutstationStackConfig(new DatabaseConfig(1,5,2,0,1));
 

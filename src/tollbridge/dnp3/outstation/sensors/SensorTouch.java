@@ -12,8 +12,9 @@ public final class SensorTouch extends Sensor {
 
 	private EV3TouchSensor sensor;
 
-	public SensorTouch(EV3TouchSensor mySensor) {
+	public SensorTouch(EV3TouchSensor mySensor, int index) {
 	    this.sensor = mySensor;
+	    this.m_analogIndex = index;
 	}
 
 	@Override
