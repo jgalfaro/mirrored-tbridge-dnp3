@@ -1,4 +1,6 @@
-Tollbridge testbed for [DNP3](http://en.wikipedia.org/wiki/DNP3). It implements:
+# Tollbridge DNP3 
+
+Tollbridge testbed using the [DNP3](http://en.wikipedia.org/wiki/DNP3) protocol. It implements:
 
 * a control center,
 * a Lego EV3 bridge, 
